@@ -1,11 +1,11 @@
 [package]
-name = "haybale"
-version = "0.7.0-pre"
-authors = ["Craig Disselkoen <craigdissel@gmail.com>"]
+name = "haybaleMPC"
+version = "0.7.0-pre-0.1"
+authors = ["fanyx"]
 edition = "2018"
 description = "Symbolic execution of LLVM IR, written in Rust"
-documentation = "https://docs.rs/haybale"
-repository = "https://github.com/PLSysSec/haybale"
+documentation = "https://docs.rs/haybaleMPC"
+repository = "https://github.com/haybaleMPC"
 readme = "README.md"
 keywords = ["symbolic", "llvm", "IR", "SMT"]
 license = "MIT"

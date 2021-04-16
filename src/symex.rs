@@ -111,6 +111,153 @@ pub fn symex_function<'p, B: Backend>(
     ))
 }
 
+pub fn symex_function2<'p, B: Backend>(
+    funcname: &str,
+    project: &'p Project,
+    config: Config<'p, B>,
+    params: Option<Vec<ParameterVal>>,
+    symbols: Option<Vec<String>>,
+) -> Result<ExecutionManager<'p, B>> {
+    debug!("Symexing function {}", funcname);
+    let (func, module) = project
+        .get_func_by_name(funcname)
+        .unwrap_or_else(|| panic!("Failed to find function named {:?}", funcname));
+    let start_loc = Location {
+        module,
+        func,
+        bb: func
+            .basic_blocks
+            .get(0)
+            .expect("Failed to get entry basic block"),
+        instr: BBInstrIndex::Instr(0),
+        source_loc: None, // this will be updated once we get there and begin symex of the instruction
+    };
+    let squash_unsats = config.squash_unsats;
+    let mut state = State::new(project, start_loc, config);
+    let params = params.unwrap_or_else(|| {
+        std::iter::repeat(ParameterVal::Unconstrained)
+            .take(func.parameters.len())
+            .collect()
+    });
+    let bvparams: Vec<_> = func
+        .parameters
+        .iter()
+        .zip_eq(params.into_iter())
+        .map(|(param, paramval)| {
+            let param_size = state
+                .size_in_bits(&param.ty)
+                .expect("Parameter type is a struct opaque in the entire Project");
+            assert_ne!(param_size, 0, "Parameter {} shouldn't have size 0 bits", &param.name);
+            let bvparam = state
+                .new_bv_with_name(param.name.clone(), param_size)
+                .unwrap();
+            match paramval {
+                ParameterVal::Unconstrained => {}, // nothing to do
+                ParameterVal::ExactValue(val) => {
+                    bvparam._eq(&state.bv_from_u64(val, param_size)).assert()?;
+                },
+                ParameterVal::Range(low, high) => {
+                    debug_assert!(low <= high);
+                    bvparam.ugte(&state.bv_from_u64(low, param_size)).assert()?;
+                    bvparam.ulte(&state.bv_from_u64(high, param_size)).assert()?;
+                },
+                ParameterVal::NonNullPointer => {
+                    match param.ty.as_ref() {
+                        Type::PointerType { .. } => {
+                            bvparam._ne(&state.zero(param_size)).assert()?;
+                        },
+                        ty => panic!("ParameterVal::NonNullPointer used for non-pointer parameter {} (which has type {:?})", &param.name, ty),
+                    }
+                }
+                ParameterVal::PointerToAllocated(allocbytes) => {
+                    match param.ty.as_ref() {
+                        Type::PointerType { .. } => {
+                            let allocbits = allocbytes * 8;
+                            let allocated = state.allocate(allocbits);
+                            bvparam._eq(&allocated).assert()?;
+                        },
+                        ty => panic!("ParameterVal::PointerToAllocated used for non-pointer parameter {} (which has type {:?})", &param.name, ty),
+                    }
+                }
+            }
+            Ok(bvparam)
+        })
+        .collect::<Result<Vec<_>>>()?;
+    
+    // set symbol for parameter bv
+    if let Some(bvsymbols) = symbols {
+        for (bvparam, bvsymbol) in [0..bvparams.len()].iter().zip(bvsymbols) {
+            bvparam.set_symbol(Some(&bvsymbol));
+        }
+    }
+
+ 
+    let em = ExecutionManager::new(
+        state,
+        project,
+        bvparams,
+        squash_unsats,
+    );
+    // // make support for pointer parameter 
+    // for idx in 0..func.parameters.len() {
+    //     let param = func.parameters.get(idx).unwrap();
+    //     let ty = &param.ty.to_string();
+    //     println!("Parameter name : {}, type: {}", param.name, ty);
+    //     if ty == &String::from("i32*") {
+    //         let bvsymbols = symbols.unwrap_or_else(
+    //             || {
+    //                 std::vec!(String::from("Q"),
+    //                     String::from("W"),
+    //                     String::from("E"),
+    //                     String::from("R"),
+    //                     String::from("T"),
+    //                     String::from("Y"),
+    //                     String::from("U"),
+    //                     String::from("I"),
+    //                     String::from("P"))
+    //                 });
+    //         let len_param = func.parameters.get(idx+1).unwrap_or_else(|| panic!("read array len error"));
+    //         let st = em.mut_state();
+    //         let len_bv = st.get_bv_by_irname(&String::from(funcname), &len_param.name);
+    //         let len = len_bv.as_u64().unwrap_or_else(|| panic!(" unwrap array length failed"));
+    //         let array_ptr = st.get_bv_by_irname(&func.name, &param.name).clone();
+    //         println!("BV array_ptr has width: {}, symbol: {:?}, id: {}",
+    //                 array_ptr.get_width(),
+    //                 array_ptr.get_symbol(),
+    //                 array_ptr.get_id(),
+    //         );
+    //         let new_ptr = st.allocate(32*len).zero_extend_to_bits(array_ptr.get_width());
+    //         array_ptr.set
+            
+    //         let index = st.bv_from_u64(1, 32).zero_extend_to_bits(array_ptr.get_width());
+    //         let (offset, _) = st.get_offset_bv_index(
+    //             &param.ty,
+    //             &index,
+    //             st.solver.clone()
+    //         ).unwrap_or_else(|e| panic!("get array ele offset failed: {}", e));
+    //         println!("array offset: {:?}", offset);
+           
+    //         for i in 0..len{
+    //             if i > 0 {
+    //                 new_ptr.add(&offset);
+    //             }
+                
+    //             println!("Assign array element symbol to address {:?}", new_ptr);
+    //             let mut ele = st.read(&new_ptr, 32)
+    //                 .unwrap_or_else(|e| panic!("read bv from array ptr failed:{}",e));
+    //             let mut symbol = String::from(bvsymbols.get(idx)
+    //                 .unwrap_or_else(| | panic!("no symbol find")) );
+    //             symbol.push_str(&i.to_string());
+    //             ele.set_symbol(Some(&symbol));
+    //             if let Err(e) = st.write(&new_ptr, ele) {
+    //                panic!("write bv by array ptr failed:{}",e);
+    //             }
+    //         }
+            
+    //     }
+    // }
+    Ok(em)
+}
 /// An `ExecutionManager` allows you to symbolically explore executions of a
 /// function. Conceptually, it is an `Iterator` over possible paths through the
 /// function. Calling `next()` on an `ExecutionManager` explores another possible
