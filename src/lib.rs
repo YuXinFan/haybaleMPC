@@ -349,3 +349,4 @@ pub fn get_possible_return_values_of_func<'p>(
 }
 
 mod declassify_verification;
+pub use declassify_verification::verify_declassify_leakages_of_func;
