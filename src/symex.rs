@@ -152,50 +152,6 @@ pub fn symex_function2<'p, B: Backend>(
                 String::from("P")
             )
         );
-    // let bvparams: Vec<_> = func
-    //     .parameters
-    //     .iter()
-    //     .zip_eq(params.into_iter())
-    //     .map(|(param, paramval)| {
-    //         let param_size = state
-    //             .size_in_bits(&param.ty)
-    //             .expect("Parameter type is a struct opaque in the entire Project");
-    //         assert_ne!(param_size, 0, "Parameter {} shouldn't have size 0 bits", &param.name);
-    //         let bvparam = state
-    //             .new_bv_with_name(param.name.clone(), param_size)
-    //             .unwrap();
-    //         match paramval {
-    //             ParameterVal::Unconstrained => {}, // nothing to do
-    //             ParameterVal::ExactValue(val) => {
-    //                 bvparam._eq(&state.bv_from_u64(val, param_size)).assert()?;
-    //             },
-    //             ParameterVal::Range(low, high) => {
-    //                 debug_assert!(low <= high);
-    //                 bvparam.ugte(&state.bv_from_u64(low, param_size)).assert()?;
-    //                 bvparam.ulte(&state.bv_from_u64(high, param_size)).assert()?;
-    //             },
-    //             ParameterVal::NonNullPointer => {
-    //                 match param.ty.as_ref() {
-    //                     Type::PointerType { .. } => {
-    //                         bvparam._ne(&state.zero(param_size)).assert()?;
-    //                     },
-    //                     ty => panic!("ParameterVal::NonNullPointer used for non-pointer parameter {} (which has type {:?})", &param.name, ty),
-    //                 }
-    //             }
-    //             ParameterVal::PointerToAllocated(allocbytes) => {
-    //                 match param.ty.as_ref() {
-    //                     Type::PointerType { .. } => {
-    //                         let allocbits = allocbytes * 8;
-    //                         let allocated = state.allocate(allocbits);
-    //                         bvparam._eq(&allocated).assert()?;
-    //                     },
-    //                     ty => panic!("ParameterVal::PointerToAllocated used for non-pointer parameter {} (which has type {:?})", &param.name, ty),
-    //                 }
-    //             }
-    //         }
-    //         Ok(bvparam)
-    //     })
-    //     .collect::<Result<Vec<_>>>()?;
     
     let bvparams: Vec<_> = func
         .parameters
@@ -234,6 +190,29 @@ pub fn symex_function2<'p, B: Backend>(
                         Type::PointerType { .. } => {
                             let allocbits = allocbytes * 8;
                             let allocated = state.allocate(allocbits);
+                            //let size_i32 = allocbits / 32 ;
+                            //let dup_allocated = allocated.clone();
+
+                            // Add symbol for array elements, failed
+
+                            //dup_allocated.sub(&state.bv_from_u64(32, dup_allocated.get_width()));
+                            // for idx in 0..size_i32 {
+                            //     dup_allocated.add(&state.bv_from_u64(32, dup_allocated.get_width()));
+                            //     let ele = state.read(&dup_allocated, 32);
+                            //     match ele {
+                            //         Ok(mut v) => {
+                            //             v.set_symbol(Some(&format!("{}_{}", symbol, idx)));
+                            //             match state.write(&dup_allocated, v) {
+                            //                 Ok(_) => {},
+                            //                 Err(e)=>{ panic!("Write to array element error: {}", e);}
+                            //             }
+                            //         },
+                            //         Err(e) => {
+                            //             panic!("Read array element error: {}", e);
+                            //         }
+                            //     }
+                            // }
+
                             bvparam._eq(&allocated).assert()?;
                         },
                         ty => panic!("ParameterVal::PointerToAllocated used for non-pointer parameter {} (which has type {:?})", &param.name, ty),

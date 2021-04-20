@@ -6,18 +6,22 @@ bool declassify(bool b) {
     return b;
 }
 
-int ArrayElementExtract(int a[], int n) {
-    int t = a[0];
-    int c = a[1];
-    int d = a[2];
-    return t > c && c > d;
+int ArrayElementUnconstrained(int a[], int n) {
+    return a[n];
 }
-int ArrayElementAssignConstant(int a[], int n) {
+
+int ArrayElementConstant(int a[], int n) {
     a[0] = 1;
     a[1] = 2;
     a[2] = 3;
     return a[0]< a[1] && a[1] < a[2];
 }
+
+int ArrayElementCompare(int a[], int n) {
+    bool b = a[0] > a[1] && a[1] > a[2];
+    return b;
+}
+
 int ArrayElementAssignVar(int a[], int n, int x) {
     a[0] = x;
     a[1] = x;

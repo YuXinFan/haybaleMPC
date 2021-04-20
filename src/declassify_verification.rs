@@ -87,10 +87,9 @@ pub fn verify_declassify_leakages_of_func<'p>(
             Ok(ReturnValue::Return(bvretval)) => {
                 assert_eq!(bvretval.get_width(), return_width);
                 // rule out all the returned values we already have - we're interested in new values
-                let new_symbol = bvretval.get_symbol().unwrap_or("MPCunknow");
-                if let Some(_) = possibol_expr.get(new_symbol) {
-                    possibol_expr.insert(String::from(new_symbol));
-                }
+                let bv_expr = format!("{:?}", bvretval); 
+                let bv_expr: String = String::from(bvretval.get_symbol().unwrap_or(&bv_expr));
+                possibol_expr.insert(bv_expr);
             },
             Ok(ReturnValue::Throw(bvptr)) => {
                 match thrown_size {
