@@ -1421,6 +1421,23 @@ where
     /// If the returned value is `Ok(None)`, then we finished the call normally, and execution should continue from here.
     fn symex_call(&mut self, call: &'p instruction::Call) -> Result<Option<ReturnValue<B::BV>>> {
         debug!("Symexing call {:?}", call);
+        ////catch declassify 
+        if let either::Either::Right(op) = &call.function {
+            if let Some(const_op) = op.as_constant() {
+                if let llvm_ir::Constant::GlobalReference{name, ty: _} = const_op {
+                    let fn_call = name.clone().to_string();
+                    if String::from("declassify") == fn_call {
+                        if let Some(name) = &call.dest {
+                            // let revealed = self.get_bv_by_irname(name).clone();
+                        }else {
+                            debug!("declassify assign result to none value");
+                        }
+                    }
+                }
+            }
+        }
+
+        ////
         match self.resolve_function(&call.function)? {
             ResolvedFunction::HookActive { hook, hooked_thing } => {
                 let pretty_hookedthing = hooked_thing.to_string();
