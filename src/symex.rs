@@ -5,7 +5,7 @@ use llvm_ir::types::NamedStructDef;
 use llvm_ir::*;
 use log::{debug, info};
 use reduce::Reduce;
-use std::convert::TryInto;
+use std::{collections::HashMap, convert::TryInto};
 use std::fmt;
 
 use crate::backend::*;
@@ -141,15 +141,15 @@ pub fn symex_function2<'p, B: Backend>(
     });
     let bvsymbols = symbols
         .unwrap_or(
-     std::vec!(String::from("Q"),
-                String::from("W"),
-                String::from("E"),
-                String::from("R"),
-                String::from("T"),
+     std::vec!(String::from("X"),
                 String::from("Y"),
-                String::from("U"),
-                String::from("I"),
-                String::from("P")
+                String::from("Z"),
+                String::from("A"),
+                String::from("B"),
+                String::from("C"),
+                String::from("M"),
+                String::from("N"),
+                String::from("K")
             )
         );
     
@@ -258,6 +258,9 @@ pub struct ExecutionManager<'p, B: Backend> {
     fresh: bool,
     /// The `squash_unsats` setting from `Config`
     squash_unsats: bool,
+
+    /// For reveal check used
+    revealed: HashMap<String,Vec<Vec<B::BV>>>,
 }
 
 impl<'p, B: Backend> ExecutionManager<'p, B> {
@@ -275,6 +278,7 @@ impl<'p, B: Backend> ExecutionManager<'p, B> {
             bvparams,
             fresh: true,
             squash_unsats,
+            revealed: HashMap::new(),
         }
     }
 
