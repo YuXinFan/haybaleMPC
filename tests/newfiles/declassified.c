@@ -7,7 +7,7 @@ bool declassify(bool b) {
 }
 
 int Millionaire(int a, int b) {
-    if (a > b) {
+    if ( declassify( a > b ) ) {
         return true;
     }else {
         return false;
@@ -17,6 +17,17 @@ int Millionaire(int a, int b) {
 int Max(int a, int b, int c) {
     int m = 0;
     if (m < b) {
+        m = 1;
+    }
+    if (declassify(m < c) )  {
+        m = 2;
+    }
+    return m;
+}
+
+int MaxLeak(int a, int b, int c) {
+    int m = 0;
+    if (declassify(m < b)) {
         m = 1;
     }
     if (m < c) {

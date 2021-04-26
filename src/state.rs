@@ -387,7 +387,17 @@ impl<'p, B: Backend> fmt::Display for BacktrackPoint<'p, B> {
 impl<'p, B: Backend> State<'p, B>
 where
     B: 'p,
-{
+{   
+    pub fn get_last_bvcond(&self) -> Option<B::BV> {
+        let len = self.backtrack_points.borrow().len();
+        if len == 0 {
+            None
+        }else {
+            let backtrackpoints = self.backtrack_points.borrow();
+            let btp = backtrackpoints.get(len-1)?;
+            Some(btp.constraint.clone())
+        }
+    }
     /// `start_loc`: the `Location` where the `State` should begin executing.
     /// As of this writing, `start_loc` should be the entry point of a
     /// function, or you will have problems.
@@ -1978,6 +1988,8 @@ where
             self.path.truncate(bp.path_len);
             self.cur_loc = bp.loc;
             bp.constraint.assert()?;
+
+
             Ok(true)
         } else {
             Ok(false)

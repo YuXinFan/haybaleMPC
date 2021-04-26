@@ -5,7 +5,7 @@ use llvm_ir::types::NamedStructDef;
 use llvm_ir::*;
 use log::{debug, info};
 use reduce::Reduce;
-use std::{collections::HashMap, convert::TryInto};
+use std::{collections::HashMap, convert::TryInto, collections::HashSet};
 use std::fmt;
 
 use crate::backend::*;
@@ -259,8 +259,10 @@ pub struct ExecutionManager<'p, B: Backend> {
     /// The `squash_unsats` setting from `Config`
     squash_unsats: bool,
 
-    /// For reveal check used
-    revealed: HashMap<String,Vec<Vec<B::BV>>>,
+    //// For reveal check used
+    revealmap: HashMap<String, HashSet<B::BV>>,
+    revealed: Vec<B::BV>, 
+    revealfunc: String,
 }
 
 impl<'p, B: Backend> ExecutionManager<'p, B> {
@@ -278,7 +280,9 @@ impl<'p, B: Backend> ExecutionManager<'p, B> {
             bvparams,
             fresh: true,
             squash_unsats,
-            revealed: HashMap::new(),
+            revealmap: HashMap::new(),
+            revealed: vec!(),
+            revealfunc: String::from("declassify"),
         }
     }
 
@@ -418,7 +422,9 @@ where
                     Instruction::Call(call) => match self.symex_call(call) {
                         Err(e) => Err(e),
                         Ok(None) => Ok(()),
-                        Ok(Some(symexresult)) => return Ok(Some(symexresult)),
+                        Ok(Some(symexresult)) => {
+                            return Ok(Some(symexresult))
+                        },
                     },
                     Instruction::LandingPad(_) => return Err(Error::UnsupportedInstruction("Encountered an LLVM `LandingPad` instruction, but wasn't expecting it (there is no inflight exception)".to_owned())),
                     _ => return Err(Error::UnsupportedInstruction(format!("instruction {:?}", inst))),
@@ -466,6 +472,9 @@ where
     /// Returns the `ReturnValue` representing the final return value, or
     /// `Ok(None)` if no possible paths were found.
     fn backtrack_and_continue(&mut self) -> Result<Option<ReturnValue<B::BV>>> {
+        ////
+        let bvcond = self.state.get_last_bvcond().unwrap();
+        ////
         if self.state.revert_to_backtracking_point()? {
             info!(
                 "Reverted to backtrack point; {} more backtrack points available",
@@ -481,6 +490,17 @@ where
                     String::new()
                 }
             );
+            ////
+            for bv in self.revealed.iter_mut() {
+                if ( format!("{:?}", bv) == format!("{:?}", &bvcond)) {
+                    *bv = bvcond;
+                    debug!("FIND BACKTRACK MATCH: {:?}", bv);
+                    break;
+                }else {
+                    debug!("FIND BACKTRACK UNMATCH: \n{:?}\n{:?}", bv, bvcond);
+                }
+            }
+            ////
             self.symex_from_cur_loc()
         } else {
             // No backtrack points (and therefore no paths) remain
@@ -1421,25 +1441,10 @@ where
     /// If the returned value is `Ok(None)`, then we finished the call normally, and execution should continue from here.
     fn symex_call(&mut self, call: &'p instruction::Call) -> Result<Option<ReturnValue<B::BV>>> {
         debug!("Symexing call {:?}", call);
-        ////catch declassify 
-        if let either::Either::Right(op) = &call.function {
-            if let Some(const_op) = op.as_constant() {
-                if let llvm_ir::Constant::GlobalReference{name, ty: _} = const_op {
-                    let fn_call = name.clone().to_string();
-                    if String::from("declassify") == fn_call {
-                        if let Some(name) = &call.dest {
-                            // let revealed = self.get_bv_by_irname(name).clone();
-                        }else {
-                            debug!("declassify assign result to none value");
-                        }
-                    }
-                }
-            }
-        }
-
-        ////
+      
         match self.resolve_function(&call.function)? {
             ResolvedFunction::HookActive { hook, hooked_thing } => {
+                debug!(" Enter HookActive in symex_call");
                 let pretty_hookedthing = hooked_thing.to_string();
                 let quiet = if let HookedThing::Intrinsic(_) = hooked_thing {
                     true // executing the built-in hook of an intrinsic is relatively unimportant from a logging standpoint
@@ -1480,6 +1485,8 @@ where
                 Ok(None)
             },
             ResolvedFunction::NoHookActive { called_funcname } => {
+                debug!("Enter NoHookActive in symex");
+                // declassify function enter this section to solve 
                 let at_max_callstack_depth = match self.state.config.max_callstack_depth {
                     Some(max_depth) => self.state.current_callstack_depth() >= max_depth,
                     None => false,
@@ -1560,6 +1567,12 @@ where
                             self.state.record_path_entry();
                             match returned_bv {
                                 ReturnValue::Return(bv) => {
+                                    debug!("RETURN VALUE AT ELSEIF {:?}", called_funcname);
+                                    if called_funcname == &self.revealfunc {
+                                        self.revealed.push(bv.clone());
+                                    }
+                                    ////
+
                                     // can't quite use `state.record_bv_result(call, bv)?` because Call is not HasResult
                                     self.state.assign_bv_to_name(
                                         call.dest.as_ref().unwrap().clone(),
@@ -1604,11 +1617,14 @@ where
                             match self.symex_hook(call, &hook.clone(), &pretty_funcname, true)? {
                                 // Assume that `symex_hook()` has taken care of validating the hook return value as necessary
                                 ReturnValue::Return(retval) => {
+                                   
+                                    debug!("RETURN VALUE AT ELSE of {}", pretty_funcname);
                                     // can't quite use `state.record_bv_result(call, retval)?` because Call is not HasResult
                                     self.state.assign_bv_to_name(
                                         call.dest.as_ref().unwrap().clone(),
                                         retval,
                                     )?;
+                                   
                                 },
                                 ReturnValue::ReturnVoid => {},
                                 ReturnValue::Throw(bvptr) => {
@@ -1985,6 +2001,17 @@ where
             self.state
                 .save_backtracking_point(&condbr.false_dest, bvcond.not());
             bvcond.assert()?;
+            //// 
+            for bv in self.revealed.iter_mut() {
+                if (format!("{:?}", bv) == format!("{:?}", bvcond)) {
+                    *bv = bvcond.clone();
+                    debug!("Find bv match: {:?}", bv);
+                    break;
+                }else {
+                    debug!("Find bv unmatch: \n{:?}\n{:?}", bv, bvcond);
+                }
+            }
+            ////
             self.state
                 .cur_loc
                 .move_to_start_of_bb_by_name(&condbr.true_dest);

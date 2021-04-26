@@ -40,3 +40,27 @@ fn declassified_max() {
 }
 
 
+#[test]
+fn declassified_max_leak() {
+    let funcname = "MaxLeak";
+    init_logging();
+    let proj = get_project();
+    let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained, ParameterVal::Unconstrained);
+    let vecsymbols = vec!(String::from("x"), String::from("y"), String::from("z"));
+    let args = verify_declassify_leakages_of_func(
+        funcname, 
+        &proj, 
+        Config::default(),
+        Some(vecparams),
+        Some(vecsymbols),
+        None,
+        100    );
+    match args  {
+        PossibleSolutions::Exactly(hs) => {
+            println!("Exactly: {:?}", hs);
+        },
+        PossibleSolutions::AtLeast(hs) => {
+            println!("AtLeast: {:?}", hs);
+        }
+    }
+}

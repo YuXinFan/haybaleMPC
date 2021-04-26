@@ -1,3 +1,5 @@
+use core::panic;
+
 use crate::HashSet;
 use crate::ReturnValue;
 use crate::PossibleSolutions;
@@ -109,6 +111,15 @@ pub fn verify_declassify_leakages_of_func<'p>(
             },
         }
     }
+    // let a = match em.mut_state().new_bv_with_name(Name::Number(10010), 32) {
+    //     Ok(v) => v,
+    //     Err(e) => panic!("e"),
+    // };
+    // println!("a={:?}", a);
+    // let b = a.not();
+    // let c = a.clone();
+    // println!("c={:?}", c);
+    // println!("{}", format!("{:?}",b)==format!("{:?}",c));
     if possibol_expr.len() > n {
         //possibol_expr
         PossibleSolutions::AtLeast(possibol_expr)
