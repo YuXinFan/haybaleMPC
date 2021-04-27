@@ -260,7 +260,7 @@ pub struct ExecutionManager<'p, B: Backend> {
     squash_unsats: bool,
 
     //// For reveal check used
-    revealmap: HashMap<String, HashSet<B::BV>>,
+    revealmap: HashMap<String, Vec<B::BV>>,
     revealed: Vec<B::BV>, 
     revealfunc: String,
 }
@@ -333,7 +333,33 @@ where
             debug!("ExecutionManager: requesting next path");
             self.backtrack_and_continue()
         };
-        retval.transpose()
+        
+        let retval = retval.transpose();
+        //// update revealmap
+        let retvalref = &retval;
+        if let Some(Ok(ReturnValue::Return(bvret))) = retvalref {
+            let symbol =  match bvret.get_symbol(){
+                Some(s) => {String::from(s)},
+                None => {format!("{:?}", bvret)}
+            };
+            if self.revealmap.contains_key(&symbol) {
+                let oldrevealed = self.revealmap.get(&symbol).unwrap().clone().into_iter();
+                let newrevealed = oldrevealed.chain(self.revealed.clone()).collect_vec();
+                self.revealmap.insert(String::from(&symbol), newrevealed);
+            }else {
+                self.revealmap.insert(String::from(&symbol), self.revealed.clone());
+            }
+
+            debug!("BEFORE SAT:{:?}", &self.revealmap.get(&symbol).unwrap());
+            //// check satisifiable
+            let mut bvsat = self.state().bv_from_bool(true);
+            for bvreveal in self.revealmap.get(&symbol).unwrap() {
+                bvsat = bvsat.and(bvreveal);
+            }
+            debug!("SAT RESULT: {:?}", bvsat.get_solver().sat());
+        }
+        ////
+        return retval;
     }
 }
 
@@ -473,7 +499,8 @@ where
     /// `Ok(None)` if no possible paths were found.
     fn backtrack_and_continue(&mut self) -> Result<Option<ReturnValue<B::BV>>> {
         ////
-        let bvcond = self.state.get_last_bvcond().unwrap();
+        let bvcond = self.state.get_last_bvcond();
+        debug!("Extract last bv: {:?}", &bvcond);
         ////
         if self.state.revert_to_backtracking_point()? {
             info!(
@@ -491,15 +518,24 @@ where
                 }
             );
             ////
-            for bv in self.revealed.iter_mut() {
-                if ( format!("{:?}", bv) == format!("{:?}", &bvcond)) {
-                    *bv = bvcond;
-                    debug!("FIND BACKTRACK MATCH: {:?}", bv);
-                    break;
-                }else {
-                    debug!("FIND BACKTRACK UNMATCH: \n{:?}\n{:?}", bv, bvcond);
-                }
+            debug!("Enter Backtrack");
+            match bvcond {
+                Some(b) => {
+                    for bv in self.revealed.iter_mut() {
+            
+                        if ( format!("{:?}", bv) == format!("{:?}", &b)) {
+                            *bv = b;
+                            debug!("FIND BACKTRACK MATCH: {:?}", bv);
+                            break;
+                        }else {
+                            debug!("FIND BACKTRACK UNMATCH: \n{:?}\n{:?}", bv, b);
+                        }
+                    }
+                },
+                None => ()
             }
+           
+            debug!("Exit Backtrack");
             ////
             self.symex_from_cur_loc()
         } else {
@@ -1567,8 +1603,10 @@ where
                             self.state.record_path_entry();
                             match returned_bv {
                                 ReturnValue::Return(bv) => {
+                                    //// declassify function entry here
                                     debug!("RETURN VALUE AT ELSEIF {:?}", called_funcname);
                                     if called_funcname == &self.revealfunc {
+                                        debug!("PUSH REVEALED: {:?}", &bv);
                                         self.revealed.push(bv.clone());
                                     }
                                     ////
@@ -2002,15 +2040,17 @@ where
                 .save_backtracking_point(&condbr.false_dest, bvcond.not());
             bvcond.assert()?;
             //// 
+            debug!("Enter condbr match");
             for bv in self.revealed.iter_mut() {
                 if (format!("{:?}", bv) == format!("{:?}", bvcond)) {
                     *bv = bvcond.clone();
-                    debug!("Find bv match: {:?}", bv);
+                    debug!("CondBr bv match: {:?}", bv);
                     break;
                 }else {
-                    debug!("Find bv unmatch: \n{:?}\n{:?}", bv, bvcond);
+                    debug!("CondBr bv unmatch: \n{:?}\n{:?}", bv, bvcond);
                 }
             }
+            debug!("Exit condbr match");
             ////
             self.state
                 .cur_loc
