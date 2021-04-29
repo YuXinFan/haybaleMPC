@@ -9,6 +9,7 @@ use std::{collections::HashMap, convert::TryInto, collections::HashSet};
 use std::fmt;
 
 use crate::backend::*;
+use crate::backend::{SolverRef, BV};
 use crate::config::*;
 use crate::error::*;
 use crate::function_hooks::*;
@@ -261,6 +262,8 @@ pub struct ExecutionManager<'p, B: Backend> {
 
     //// For reveal check used
     revealmap: HashMap<String, Vec<B::BV>>,
+    revealsolver: B::SolverRef,
+    revealchecker: HashMap<String, B::SolverRef>,
     revealed: Vec<B::BV>, 
     revealfunc: String,
 }
@@ -283,6 +286,8 @@ impl<'p, B: Backend> ExecutionManager<'p, B> {
             revealmap: HashMap::new(),
             revealed: vec!(),
             revealfunc: String::from("declassify"),
+            revealchecker: HashMap::new(),
+            revealsolver: SolverRef::new(),
         }
     }
 
@@ -352,11 +357,14 @@ where
 
             debug!("BEFORE SAT:{:?}", &self.revealmap.get(&symbol).unwrap());
             //// check satisifiable
-            let mut bvsat = self.state().bv_from_bool(true);
+            //let mut bvsat = self.state().bv_from_bool(true);
+            
             for bvreveal in self.revealmap.get(&symbol).unwrap() {
-                bvsat = bvsat.and(bvreveal);
+                let bvsat:B::BV = BV::new(self.revealsolver.clone(), bvreveal.get_width(), None);
+                let r = bvsat._eq(bvreveal);
             }
-            debug!("SAT RESULT: {:?}", bvsat.get_solver().sat());
+            debug!("SAT RESULT: {:?}", self.revealsolver.sat());
+            self.revealsolver.pop(1);
         }
         ////
         return retval;
@@ -522,13 +530,14 @@ where
             match bvcond {
                 Some(b) => {
                     for bv in self.revealed.iter_mut() {
-            
-                        if ( format!("{:?}", bv) == format!("{:?}", &b)) {
-                            *bv = b;
-                            debug!("FIND BACKTRACK MATCH: {:?}", bv);
+                        if b.get_id() == bv.get_id() {
+                        //if ( format!("{:?}", bv) == format!("{:?}", &b)) {
+                            
+                            debug!("FIND BACKTRACK MATCH id: {:?}, {:?}", bv.get_id(), b.get_id());
+                            bv._eq(&self.state.bv_from_bool(false));
                             break;
                         }else {
-                            debug!("FIND BACKTRACK UNMATCH: \n{:?}\n{:?}", bv, b);
+                            debug!("FIND BACKTRACK UNMATCH id: \n{:?}\n{:?}", bv.get_id(), b.get_id());
                         }
                     }
                 },
@@ -1606,7 +1615,7 @@ where
                                     //// declassify function entry here
                                     debug!("RETURN VALUE AT ELSEIF {:?}", called_funcname);
                                     if called_funcname == &self.revealfunc {
-                                        debug!("PUSH REVEALED: {:?}", &bv);
+                                        debug!("PUSH REVEALED id {:?}: {:?}", bv.get_id(), &bv);
                                         self.revealed.push(bv.clone());
                                     }
                                     ////
@@ -2042,8 +2051,9 @@ where
             //// 
             debug!("Enter condbr match");
             for bv in self.revealed.iter_mut() {
-                if (format!("{:?}", bv) == format!("{:?}", bvcond)) {
-                    *bv = bvcond.clone();
+                if bv.get_id() == bvcond.get_id() { 
+                //if (format!("{:?}", bv) == format!("{:?}", bvcond)) {
+                    bv._eq(&self.state.bv_from_bool(true));
                     debug!("CondBr bv match: {:?}", bv);
                     break;
                 }else {
