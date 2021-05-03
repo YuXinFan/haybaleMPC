@@ -261,10 +261,15 @@ pub struct ExecutionManager<'p, B: Backend> {
     squash_unsats: bool,
 
     //// For reveal check used
-    revealmap: HashMap<String, Vec<B::BV>>,
+    // expr -> (name, id, BV, bool) set
+    revealmap: HashMap<String, Vec<(Name, u32, B::BV, bool)>>,
+    //
     revealsolver: B::SolverRef,
+    // 
     revealchecker: HashMap<String, B::SolverRef>,
-    revealed: Vec<B::BV>, 
+    // temprory revealed bv, 0,+-1
+    revealed: Vec<(Name, u32, B::BV, Option<bool>)>, 
+    // function name of reveal function, eg declassify
     revealfunc: String,
 }
 
@@ -341,6 +346,7 @@ where
         
         let retval = retval.transpose();
         //// update revealmap
+        
         let retvalref = &retval;
         if let Some(Ok(ReturnValue::Return(bvret))) = retvalref {
             let symbol =  match bvret.get_symbol(){
@@ -349,22 +355,56 @@ where
             };
             if self.revealmap.contains_key(&symbol) {
                 let oldrevealed = self.revealmap.get(&symbol).unwrap().clone().into_iter();
-                let newrevealed = oldrevealed.chain(self.revealed.clone()).collect_vec();
+                let mut revealedvec = vec!();
+                for (name, id, bv, vb) in &self.revealed {
+                    revealedvec.push( (name.clone(), id.clone(), bv.clone(), vb.unwrap()) );
+                }
+                let newrevealed = oldrevealed.chain(revealedvec).collect_vec();
                 self.revealmap.insert(String::from(&symbol), newrevealed);
             }else {
-                self.revealmap.insert(String::from(&symbol), self.revealed.clone());
+                let mut revealedvec = vec!();
+                for (name, id, bv, vb) in &self.revealed {
+                    revealedvec.push( (name.clone(), id.clone(), bv.clone(), vb.unwrap()) );
+                }
+                self.revealmap.insert(String::from(&symbol), revealedvec);
             }
 
-            debug!("BEFORE SAT:{:?}", &self.revealmap.get(&symbol).unwrap());
-            //// check satisifiable
-            //let mut bvsat = self.state().bv_from_bool(true);
             
-            for bvreveal in self.revealmap.get(&symbol).unwrap() {
-                let bvsat:B::BV = BV::new(self.revealsolver.clone(), bvreveal.get_width(), None);
-                let r = bvsat._eq(bvreveal);
+            let temp_solver = self.state.solver.duplicate();
+            temp_solver.push(1);
+            debug!("BEFORE SAT");
+            debug!("Constraint BV Vec: {:?}", &self.revealmap.get(&symbol).unwrap() );
+            debug!("NO BV Constraint SAT Constraints: {:?}", temp_solver.print_constraints());
+            debug!("NO BV constraints SAT RESULT: {:?}", temp_solver.sat());
+            for (name, id, bv, vb) in self.revealmap.get(&symbol).unwrap() {
+                if *vb == true {
+                    match self.state.solver.match_bv(bv) {
+                        Some (v) => {
+                            if let Err(e) = v.assert() {
+                            debug!("Assert bv:{:?} with error {:?}", v, e);
+                            }
+                        },
+                        None => {
+                            panic!("match_bv can not find match");
+                        }
+                    }
+                }else {
+                    match self.state.solver.match_bv(bv) {
+                        Some (v) => {
+                            if let Err(e) = v.not().assert() {
+                                debug!("Assert bv not:{:?} with error {:?}", v, e);
+                                }
+                        },
+                        None => {
+                            panic!("match_bv can not find match");
+                        }
+                    }
+                }
             }
-            debug!("SAT RESULT: {:?}", self.revealsolver.sat());
-            self.revealsolver.pop(1);
+            debug!("BV Constraint SAT Constraints: {:?}", temp_solver.print_constraints());
+            debug!("BV constraints SAT RESULT: {:?}", temp_solver.sat());
+            temp_solver.pop(1);
+            debug!("END SAT");
         }
         ////
         return retval;
@@ -529,16 +569,22 @@ where
             debug!("Enter Backtrack");
             match bvcond {
                 Some(b) => {
-                    for bv in self.revealed.iter_mut() {
-                        if b.get_id() == bv.get_id() {
-                        //if ( format!("{:?}", bv) == format!("{:?}", &b)) {
-                            
-                            debug!("FIND BACKTRACK MATCH id: {:?}, {:?}", bv.get_id(), b.get_id());
-                            bv._eq(&self.state.bv_from_bool(false));
-                            break;
-                        }else {
-                            debug!("FIND BACKTRACK UNMATCH id: \n{:?}\n{:?}", bv.get_id(), b.get_id());
+                    for (name, id, bv, v) in self.revealed.iter_mut() {
+                        match v {
+                            Some(vb) => {
+                                if b.get_id() == bv.get_id() {
+                                    debug!("FIND BACKTRACK MATCH \nid: {:?},\nvalue: {:?}", bv.get_id(), bv);
+                                    *v = Some(false);
+                                    break;
+                                }else {
+                                    debug!("FIND BACKTRACK UNMATCH id: {:?}, \nvalue: {:?}, \nid: {:?}, \nvalue: {:?}", bv.get_id(), bv, b.get_id(), b);
+                                }
+                            },
+                            None => {
+                                panic!("revealed bv has no previous value at backtrack");
+                            }
                         }
+                        
                     }
                 },
                 None => ()
@@ -1613,10 +1659,17 @@ where
                             match returned_bv {
                                 ReturnValue::Return(bv) => {
                                     //// declassify function entry here
-                                    debug!("RETURN VALUE AT ELSEIF {:?}", called_funcname);
-                                    if called_funcname == &self.revealfunc {
-                                        debug!("PUSH REVEALED id {:?}: {:?}", bv.get_id(), &bv);
-                                        self.revealed.push(bv.clone());
+                                    {
+                                        debug!("RETURN VALUE AT ELSEIF {:?}", called_funcname);
+                                        if called_funcname == &self.revealfunc {
+                                            debug!("PUSH REVEALED  id {:?}, value {:?}", bv.get_id(), &bv);
+                                            self.revealed.push(
+                                                (call.dest.as_ref().unwrap().clone(),
+                                                bv.get_id() as u32,
+                                                bv.clone(),
+                                                None)
+                                            );
+                                        }
                                     }
                                     ////
 
@@ -2047,21 +2100,29 @@ where
             // for now we choose to explore true first, and backtrack to false if necessary
             self.state
                 .save_backtracking_point(&condbr.false_dest, bvcond.not());
-            bvcond.assert()?;
             //// 
             debug!("Enter condbr match");
-            for bv in self.revealed.iter_mut() {
-                if bv.get_id() == bvcond.get_id() { 
-                //if (format!("{:?}", bv) == format!("{:?}", bvcond)) {
-                    bv._eq(&self.state.bv_from_bool(true));
-                    debug!("CondBr bv match: {:?}", bv);
-                    break;
-                }else {
-                    debug!("CondBr bv unmatch: \n{:?}\n{:?}", bv, bvcond);
-                }
+            for (name, id, bv, v) in self.revealed.iter_mut() {
+                match v {
+                    None => {
+                        if bv.get_id() == bvcond.get_id() { 
+                            debug!("Condbr Match: \nid: {}, value: {:?}", bv.get_id(), bv);
+                            *v = Some(true);
+                            break;
+                        }else {
+                            debug!("CondBr bv unmatch: \nid{:?}, \nvalue{:?}\nid{}, \nvalue{:?}", bv.get_id(), bv, bvcond.get_id(), bvcond);
+                        }
+                    }, 
+                    Some(vb) => {
+                        //panic!("Revealed bv has exactly value :{}", vb);
+                    }
+                }     
             }
             debug!("Exit condbr match");
             ////
+
+            bvcond.assert()?;
+            
             self.state
                 .cur_loc
                 .move_to_start_of_bb_by_name(&condbr.true_dest);
