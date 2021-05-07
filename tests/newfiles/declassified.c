@@ -15,23 +15,27 @@ int Millionaire(int a, int b) {
 }
 
 int Max(int a, int b, int c) {
-    int m = 0;
-    if (m < b) {
-        m = 1;
+    char m = 'a';
+    int max = a;
+    if (max < b) {
+        m = 'b';
+        max = b;
     }
-    if (declassify(m < c) )  {
-        m = 2;
+    if (declassify(max < c) )  {
+        m = 'c';
     }
     return m;
 }
 
 int MaxLeak(int a, int b, int c) {
-    int m = 0;
-    if (declassify(m < b)) {
-        m = 1;
+    char m = 'a';
+    int max = a;
+    if (declassify(max < b)) {
+        m = 'b';
+        max = b;
     }
-    if (m < c) {
-        m = 2;
+    if (max < c) {
+        m = 'c';
     }
     return m;
 }

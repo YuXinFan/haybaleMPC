@@ -352,7 +352,6 @@ where
         
         let retval = retval.transpose();
         //// update revealmap
-        debug!("execution probe1");
         let retvalref = retval.clone();
         if let Some(Ok(ReturnValue::Return(bvret))) = retvalref {
             // get the symbol of retval bv
@@ -360,48 +359,34 @@ where
                 Some(s) => {String::from(s)},
                 None => {format!("{:?}", bvret)}
             };
-            debug!("execution probe2");
 
             // check whether the symbol is existed
             if self.revealmap.contains_key(&symbol) {
-                debug!("execution probe13");
                 let mut revealedvec = vec!();
-                debug!("execution probe14");
                 for (name, id, bv, vb) in &self.revealed {
-                    debug!("execution probe15");
                     let revealed_bv: <B as Backend>::BV = BV::new(self.revealsolver.clone(), 1, None );
                     revealedvec.push( (name.clone(), id.clone(), revealed_bv, vb.unwrap()) );
-                    debug!("execution probe16");
                 }
-                debug!("execution probe17");
                 for each in self.revealmap.get(&symbol).unwrap().to_owned() {
                     revealedvec.push(each);
                 }
-                debug!("execution probe18");
                 self.revealmap.insert(String::from(&symbol), revealedvec);
-                debug!("execution probe19");
             }else {
-                debug!("execution probe21");
                 // if a new symbol, insert a new item
                 // a new item is a bv. two bv express the same bv iff they have the same id.
                 let mut revealedvec = vec!();
-                debug!("execution probe22");
                 for (name, id, bv, vb) in &self.revealed {
-                    debug!("execution probe23");
                     let revealed_bv: <B as Backend>::BV = BV::new(self.revealsolver.clone(), 1, None );
-                    debug!("execution probe24");
                     revealedvec.push( (name.clone(), id.clone(), revealed_bv, vb.unwrap()) );
-                    debug!("execution probe25");
                 }
-                debug!("execution probe26");
                 self.revealmap.insert(String::from(&symbol), revealedvec);
-                debug!("execution probe27");
             }
 
             
-            debug!("BEFORE SAT");
-            debug!("NO BV Constraint SAT Constraints: {:?}", self.revealsolver.print_constraints());
-            debug!("NO BV constraints SAT RESULT: {:?}", self.revealsolver.sat());
+            //debug!("NO Revealed Constraints Solver Constraints: {:?}", self.revealsolver.print_constraints());
+            //debug!("NO Revealed constraints Solver Sat Result: {:?}", solver_utils::sat(&self.revealsolver));
+            self.revealsolver.push(1);
+            // push to create a context to do verification without side-effect
             let mut constraints: Vec<<B as Backend>::BV> = vec!();
             let true_bv: <B as Backend>::BV  =  BV::from_bool(self.revealsolver.clone(), true);
             let false_bv: <B as Backend>::BV  = BV::from_bool(self.revealsolver.clone(), false);
@@ -414,20 +399,36 @@ where
                 let bvs_bv =  bvs.get(id).unwrap().clone(); 
                 match vb {
                     true => {
-                        constraints.push( bvs_bv._eq(&true_bv));
+                        //constraints.push( bvs_bv._eq(&true_bv));
+                        bvs_bv._eq(&true_bv).assert().expect("bvs_bv._eq failed: ");
                     },
                     false => {
-                        constraints.push( bvs_bv._eq(&false_bv));
+                        //constraints.push( bvs_bv._eq(&false_bv));
+                        bvs_bv._eq(&false_bv).assert().expect("bvs_bv.eq failed: ");
                    }
                 }
             }
-            debug!("Constraint BV Vec: {:#?}", &constraints);
-            let tmp = self.revealsolver.duplicate();
+            debug!("Revealed Constraints: {:#?}", &constraints);
+            //let tmp = self.revealsolver.duplicate();
             if constraints.len() > 0 {
-                let retval = solver_utils::sat_with_extra_constraints(&tmp, &constraints);
-                debug!("BV constraints SAT RESULT: {:?}", retval);
+                let retval = solver_utils::sat(&self.revealsolver);
+                //let retval = solver_utils::sat_with_extra_constraints(&self.revealsolver, &constraints);
+                debug!("Revealed Constraints Solver Sat Result: {:?}", retval);
+                match retval {
+                    Ok(k) => {
+                        if k == true {
+                            println!("Verification succeed at:\nexpr: {:?},\ncontrol flow: {:?}", symbol, self.revealed);
+                        }else {
+                            println!("Verification failed at:\nexpr: {:?},\ncontrol flow: {:?}", symbol, self.revealed);
+                        }
+                        
+                    },
+                    Err(e) => {
+                        panic!("SAT Solver Error: {}", e);
+                    }
+                }
             }
-            debug!("END SAT");
+            self.revealsolver.pop(1);
         }
         debug!("Finish a next call");
         ////
@@ -592,7 +593,9 @@ where
             ////
             // change revealed bv value from true to false when it is current backtrack point
             debug!("Enter Backtrack");
+            debug!("Enter revealed : prior_btp = \n{:?},\n{:?}", self.revealed, self.prior_btp);
             // check (top revealed bv id, last backtrackpoint bv id) =? 
+            // if this backtrack drop a revealed condition, drop this reveald condition from self.revealed
             if let Some(rev_prior) = self.prior_btp.pop() {
                 if let Some(v) = self.revealed.pop() {
                     match &bvcond {
@@ -615,8 +618,9 @@ where
                     }
                 }
             }
+            debug!("Exit revealed : prior_btp = \n{:?},\n{:?}", self.revealed, self.prior_btp);
            
-            // if find matched revealed bv, change the value of revealed bv
+            // if this backtrack back to a revealed condition, change the value of this revealed condition to false
             // revealed bv must be backtracked by fist in last out 
             if let ( Some(bvcond_v), Some(mut bv_revealed) ) = (bvcond,  self.revealed.pop()) {
                 if bvcond_v.get_id() as u32 == bv_revealed.1 {
@@ -627,29 +631,6 @@ where
                 }
                 self.revealed.push(bv_revealed);
             }
-            // match bvcond {
-            //     Some(b) => {
-            //         for (name, id, bv, v) in self.revealed.iter_mut() {
-            //             match v {
-            //                 Some(vb) => {
-            //                     if b.get_id() == bv.get_id() {
-            //                         debug!("FIND BACKTRACK MATCH \nid: {:?},\nvalue: {:?}", bv.get_id(), bv);
-            //                         *v = Some(false);
-            //                         break;
-            //                     }else {
-            //                         debug!("FIND BACKTRACK UNMATCH id: {:?}, \nvalue: {:?}, \nid: {:?}, \nvalue: {:?}", bv.get_id(), bv, b.get_id(), b);
-            //                     }
-            //                 },
-            //                 None => {
-            //                     panic!("revealed bv has no previous value at backtrack");
-            //                 }
-            //             }
-                        
-            //         }
-            //     },
-            //     None => ()
-            // }
-           
             debug!("Exit Backtrack");
             ////
             self.symex_from_cur_loc()
@@ -2170,31 +2151,53 @@ where
             //// 
             debug!("Enter condbr match");
             for (name, id, bv, v) in self.revealed.iter_mut() {
-                match v {
-                    None => {
-                        if bv.get_id() == bvcond.get_id() { 
+                // update the revealed bv list with revealed value
+                if bv.get_id() == bvcond.get_id() {
+                    match v {
+                        Some(b) => {
+                            panic!("Revealed bv {} has exactly value: {}", name, b);
+                        },
+                        None => {
                             debug!("Condbr Match: \nid: {}, value: {:?}", bv.get_id(), bv);
                             *v = Some(true);
-                            //// when deal with revealed bv,
-                            //   store (revealed bv backtrackpoint, the last backtrackpoint bv) pair
-                            match last_bvcond {
-                                Some(v) => {
-                                    self.prior_btp.push( ( bv.get_id() as u32, Some(v.get_id() as u32) ) );
-                                },
-                                None => {
-                                    self.prior_btp.push( ( bv.get_id() as u32, None ) );
-                                }
-                            }
-                            break;
-                        }else {
-                            debug!("CondBr bv unmatch: \nid{:?}, \nvalue{:?}\nid{}, \nvalue{:?}", bv.get_id(), bv, bvcond.get_id(), bvcond);
                         }
-                    }, 
-                    Some(vb) => {
-                        panic!("Revealed bv has exactly value :{}", vb);
                     }
-                }     
+                    match last_bvcond {
+                        Some(last_bv) => {
+                            self.prior_btp.push( ( bv.get_id() as u32, Some(last_bv.get_id() as u32) ) );
+                        },
+                        None => {
+                            self.prior_btp.push( ( bv.get_id() as u32, None ) );
+                        }
+                    }
+                    break;
+                }
             }
+            //     match v {
+            //         None => {
+            //             if bv.get_id() == bvcond.get_id() { 
+            //                 debug!("Condbr Match: \nid: {}, value: {:?}", bv.get_id(), bv);
+            //                 *v = Some(true);
+            //                 //// when deal with revealed bv,
+            //                 //   store (revealed bv backtrackpoint, the last backtrackpoint bv) pair
+            //                 match last_bvcond {
+            //                     Some(v) => {
+            //                         self.prior_btp.push( ( bv.get_id() as u32, Some(v.get_id() as u32) ) );
+            //                     },
+            //                     None => {
+            //                         self.prior_btp.push( ( bv.get_id() as u32, None ) );
+            //                     }
+            //                 }
+            //                 break;
+            //             }else {
+            //                 debug!("CondBr bv unmatch: \nid{:?}, \nvalue{:?}\nid{}, \nvalue{:?}", bv.get_id(), bv, bvcond.get_id(), bvcond);
+            //             }
+            //         }, 
+            //         Some(vb) => {
+            //             panic!("Revealed bv {} has exactly value :{}", name, vb);
+            //         }
+            //     }     
+            // }
             debug!("Exit condbr match");
             ////
 
