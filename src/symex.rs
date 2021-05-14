@@ -297,7 +297,7 @@ impl<'p, B: Backend> ExecutionManager<'p, B> {
             prior_btp: vec!(),
         };
         ret.revealsolver.set_opt(BtorOption::Incremental(true));
-        ret.revealsolver.set_opt(BtorOption::ModelGen(ModelGen::All));
+        //ret.revealsolver.set_opt(BtorOption::ModelGen(ModelGen::All));
         return ret;
     }
 
@@ -354,6 +354,8 @@ where
         //// update revealmap
         let retvalref = retval.clone();
         if let Some(Ok(ReturnValue::Return(bvret))) = retvalref {
+            //self.revealsolver.push(1);
+            //self.revealsolver.pop(1);
             // get the symbol of retval bv
             let symbol =  match bvret.get_symbol(){
                 Some(s) => {String::from(s)},
@@ -361,6 +363,7 @@ where
             };
 
             // check whether the symbol is existed
+            debug!("Update template reveald bv list");
             if self.revealmap.contains_key(&symbol) {
                 let mut revealedvec = vec!();
                 for (name, id, bv, vb) in &self.revealed {
@@ -381,13 +384,12 @@ where
                 }
                 self.revealmap.insert(String::from(&symbol), revealedvec);
             }
+            debug!("Updated revealmap");
 
             
             //debug!("NO Revealed Constraints Solver Constraints: {:?}", self.revealsolver.print_constraints());
             //debug!("NO Revealed constraints Solver Sat Result: {:?}", solver_utils::sat(&self.revealsolver));
-            self.revealsolver.push(1);
             // push to create a context to do verification without side-effect
-            let mut constraints: Vec<<B as Backend>::BV> = vec!();
             let true_bv: <B as Backend>::BV  =  BV::from_bool(self.revealsolver.clone(), true);
             let false_bv: <B as Backend>::BV  = BV::from_bool(self.revealsolver.clone(), false);
             let mut bvs: HashMap<u32, <B as Backend>::BV> = HashMap::new();
@@ -408,27 +410,25 @@ where
                    }
                 }
             }
-            debug!("Revealed Constraints: {:#?}", &constraints);
             //let tmp = self.revealsolver.duplicate();
-            if constraints.len() > 0 {
-                let retval = solver_utils::sat(&self.revealsolver);
-                //let retval = solver_utils::sat_with_extra_constraints(&self.revealsolver, &constraints);
-                debug!("Revealed Constraints Solver Sat Result: {:?}", retval);
-                match retval {
-                    Ok(k) => {
-                        if k == true {
-                            println!("Verification succeed at:\nexpr: {:?},\ncontrol flow: {:?}", symbol, self.revealed);
-                        }else {
-                            println!("Verification failed at:\nexpr: {:?},\ncontrol flow: {:?}", symbol, self.revealed);
-                        }
-                        
-                    },
-                    Err(e) => {
-                        panic!("SAT Solver Error: {}", e);
+       let retval = solver_utils::sat(&self.revealsolver);
+            //let retval = solver_utils::sat_with_extra_constraints(&self.revealsolver, &constraints);
+            debug!("Revealed Constraints Solver Sat Result: {:?}", retval);
+            match retval {
+                Ok(k) => {
+                    if k == true {
+                        println!("Verification succeed at expr: {:?},\nCurrent control flow: {:?}", symbol , self.revealed);
+                    }else {
+                        println!("Verification failed at expr: {:?},\nCurrent control flow: {:?}", symbol, self.revealed);
                     }
+                    println!("------------");
+                },
+                Err(e) => {
+                    panic!("SAT Solver Error: {}", e);
                 }
             }
-            self.revealsolver.pop(1);
+            self.revealsolver = SolverRef::new();
+        //self.revealsolver.pop(1);
         }
         debug!("Finish a next call");
         ////
