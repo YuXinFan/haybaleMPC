@@ -6,7 +6,7 @@ use llvm_ir::types::NamedStructDef;
 use llvm_ir::*;
 use log::{debug, info};
 use reduce::Reduce;
-use std::{collections::HashMap, convert::TryInto, collections::HashSet};
+use std::{collections::HashMap, collections::HashSet, convert::TryInto, ops::Deref};
 use std::fmt;
 
 use crate::{backend::*, solver_utils};
@@ -357,9 +357,47 @@ where
             //self.revealsolver.push(1);
             //self.revealsolver.pop(1);
             // get the symbol of retval bv
-            let symbol =  match bvret.get_symbol(){
-                Some(s) => {String::from(s)},
-                None => {format!("{:?}", bvret)}
+            let mut symbol: String;
+            // check if retval bv is a pointer bv
+            let ret_typeref = self.func.return_type.clone();
+            let ret_type = ret_typeref.deref();
+            match ret_type {
+                // ret is a pointer 
+                llvm_ir::Type::PointerType{pointee_type, addr_space}  => {
+                    let item_type = pointee_type.deref();
+                    match item_type {
+                        llvm_ir::Type::IntegerType{bits} => {
+                            let mut ret_array = vec!();     // a buffer to store symbol value of each item in the array
+                            let whole_bits = self.state
+                                .get_allocation_size(&bvret)
+                                .expect("not a pointer by allocation function").unwrap();   // the memory size of this array in bits
+                            let len = (whole_bits as u32 / bits) as u32;    // the number of items in this array
+                            for idx in 0..len {
+                                let offset = self.state
+                                    .get_offset_constant_index(item_type,idx as usize)
+                                    .expect("can't give offset");   // offset from head address to idx item in bits
+                                let offset_bv = self.state.bv_from_u32(offset.0, bvret.get_width());
+                                let item = self.state
+                                    .read(&bvret.add(&offset_bv), *bits)
+                                    .expect("can't give item");
+                                let sym_val = match item.get_symbol(){
+                                    Some(s) => {String::from(s)},
+                                    None => {format!("{:?}", item)}
+                                };
+                                ret_array.push(sym_val);
+                            }
+                            symbol = format!("{:?}",ret_array);
+                    },
+                        _ => { panic!("ret type is a pointer to non-interger value");}
+                    }
+                },
+                // ret is a value 
+                _ => {
+                    symbol =  match bvret.get_symbol(){
+                        Some(s) => {String::from(s)},
+                        None => {format!("{:?}", bvret)}
+                    }
+                }
             };
 
             // check whether the symbol is existed

@@ -46,9 +46,9 @@ warning: unused variable: `bv`
     |                            ^^ help: if this is intentional, prefix it with an underscore: `_bv`
 
 warning: unused variable: `id`
-    --> src/symex.rs:2152:24
+    --> src/symex.rs:2153:24
      |
-2152 |             for (name, id, bv, v) in self.revealed.iter_mut() {
+2153 |             for (name, id, bv, v) in self.revealed.iter_mut() {
      |                        ^^ help: if this is intentional, prefix it with an underscore: `_id`
 
 warning: unused variable: `func`
@@ -84,518 +84,454 @@ warning: crate `haybaleMPC` should have a snake case name
 
 warning: 13 warnings emitted
 
-    Finished test [unoptimized + debuginfo] target(s) in 3.10s
+    Finished test [unoptimized + debuginfo] target(s) in 1.99s
      Running target/debug/deps/mpc_declassified_tests-1c0cb134bc5d2d7a
 
 running 1 test
-[2021-05-14T12:40:56Z INFO  haybaleMPC::project] Parsing bitcode in file tests/newfiles/declassified.bc
-[2021-05-14T12:40:56Z DEBUG llvm_ir::module] Creating a Module from path "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::module] Created a MemoryBuffer
-[2021-05-14T12:40:56Z DEBUG llvm_ir::module] Parsed bitcode to llvm_sys module
-[2021-05-14T12:40:56Z DEBUG llvm_ir::module] Creating a Module from an LLVMModuleRef
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Processing func "declassify"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected info on 1 parameters
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 1 basic blocks
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 5 values
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(1)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %2 = alloca i8, align 1"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %3 = zext i1 %0 to i8"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 %3, i8* %2, align 1"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %2, metadata !11, metadata !DIExpression()), !dbg !12"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = load i8, i8* %2, align 1, !dbg !13"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = trunc i8 %4 to i1, !dbg !13"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  ret i1 %5, !dbg !14"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Processing func "Millionaire"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected info on 2 parameters
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 4 basic blocks
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 10 values
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(2)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %3 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !19, metadata !DIExpression()), !dbg !20"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !21, metadata !DIExpression()), !dbg !22"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = load i32, i32* %4, align 4, !dbg !15"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = load i32, i32* %5, align 4, !dbg !17"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = icmp sgt i32 %6, %7, !dbg !18"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = call zeroext i1 @declassify(i1 zeroext %8), !dbg !19"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %9, label %10, label %11, !dbg !20"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(10)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 1, i32* %3, align 4, !dbg !21"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %12, !dbg !21"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(11)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %3, align 4, !dbg !23"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %12, !dbg !23"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(12)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %13 = load i32, i32* %3, align 4, !dbg !25"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %13, !dbg !25"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Processing func "Max"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected info on 3 parameters
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 5 basic blocks
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 19 values
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(3)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = alloca i8, align 1"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !37, metadata !DIExpression()), !dbg !38"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !39, metadata !DIExpression()), !dbg !40"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %2, i32* %6, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %6, metadata !41, metadata !DIExpression()), !dbg !42"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %7, metadata !43, metadata !DIExpression()), !dbg !45"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 97, i8* %7, align 1, !dbg !19"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %8, metadata !46, metadata !DIExpression()), !dbg !47"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = load i32, i32* %4, align 4, !dbg !22"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %9, i32* %8, align 4, !dbg !21"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %10 = load i32, i32* %8, align 4, !dbg !23"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %11 = load i32, i32* %5, align 4, !dbg !25"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %12 = icmp slt i32 %10, %11, !dbg !26"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %12, label %13, label %15, !dbg !27"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(13)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 98, i8* %7, align 1, !dbg !28"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %14 = load i32, i32* %5, align 4, !dbg !30"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %14, i32* %8, align 4, !dbg !31"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %15, !dbg !32"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(15)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %16 = load i32, i32* %8, align 4, !dbg !33"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %17 = load i32, i32* %6, align 4, !dbg !35"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %18 = icmp slt i32 %16, %17, !dbg !36"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %19 = call zeroext i1 @declassify(i1 zeroext %18), !dbg !37"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %19, label %20, label %21, !dbg !38"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(20)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 99, i8* %7, align 1, !dbg !39"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %21, !dbg !41"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(21)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %22 = load i8, i8* %7, align 1, !dbg !42"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %23 = sext i8 %22 to i32, !dbg !42"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %23, !dbg !43"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Processing func "MaxLeak"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected info on 3 parameters
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 5 basic blocks
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 19 values
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(3)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = alloca i8, align 1"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !71, metadata !DIExpression()), !dbg !72"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !73, metadata !DIExpression()), !dbg !74"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %2, i32* %6, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %6, metadata !75, metadata !DIExpression()), !dbg !76"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %7, metadata !77, metadata !DIExpression()), !dbg !78"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 97, i8* %7, align 1, !dbg !19"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %8, metadata !79, metadata !DIExpression()), !dbg !80"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = load i32, i32* %4, align 4, !dbg !22"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %9, i32* %8, align 4, !dbg !21"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %10 = load i32, i32* %8, align 4, !dbg !23"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %11 = load i32, i32* %5, align 4, !dbg !25"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %12 = icmp slt i32 %10, %11, !dbg !26"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %13 = call zeroext i1 @declassify(i1 zeroext %12), !dbg !27"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %13, label %14, label %16, !dbg !28"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(14)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 98, i8* %7, align 1, !dbg !29"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %15 = load i32, i32* %5, align 4, !dbg !31"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %15, i32* %8, align 4, !dbg !32"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %16, !dbg !33"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(16)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %17 = load i32, i32* %8, align 4, !dbg !34"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %18 = load i32, i32* %6, align 4, !dbg !36"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %19 = icmp slt i32 %17, %18, !dbg !37"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %19, label %20, label %21, !dbg !38"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(20)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 99, i8* %7, align 1, !dbg !39"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  br label %21, !dbg !41"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(21)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %22 = load i8, i8* %7, align 1, !dbg !42"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %23 = sext i8 %22 to i32, !dbg !42"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %23, !dbg !43"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Processing func "main"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected info on 0 parameters
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 1 basic blocks
-[2021-05-14T12:40:56Z DEBUG llvm_ir::function] Collected names of 1 values
-[2021-05-14T12:40:56Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(0)
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  %1 = alloca i32, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %1, align 4"
-[2021-05-14T12:40:56Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 0, !dbg !11"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing function MaxLeak
-[2021-05-14T12:40:56Z INFO  haybaleMPC::state] Allocating global variables and functions
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocating global variables
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocating functions
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000000
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated "declassify" at #x0000000010000000
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::global_allocations] Allocating Name("declassify") (public, strong) at #x0000000010000000
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000008
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated "Millionaire" at #x0000000010000008
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::global_allocations] Allocating Name("Millionaire") (public, strong) at #x0000000010000008
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000010
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated "Max" at #x0000000010000010
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::global_allocations] Allocating Name("Max") (public, strong) at #x0000000010000010
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000018
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated "MaxLeak" at #x0000000010000018
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::global_allocations] Allocating Name("MaxLeak") (public, strong) at #x0000000010000018
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000020
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated "main" at #x0000000010000020
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::global_allocations] Allocating Name("main") (public, strong) at #x0000000010000020
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocating function hooks
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000028
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "exit" at #x0000000010000028
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000030
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "free" at #x0000000010000030
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000038
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_allocate_exception" at #x0000000010000038
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000040
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "llvm.eh.typeid.for" at #x0000000010000040
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000048
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "realloc" at #x0000000010000048
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000050
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_begin_catch" at #x0000000010000050
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000058
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "calloc" at #x0000000010000058
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000060
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "malloc" at #x0000000010000060
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000068
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_throw" at #x0000000010000068
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000070
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_end_catch" at #x0000000010000070
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000078
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::panicking::panic_bounds_check" at #x0000000010000078
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000080
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_order_fail" at #x0000000010000080
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000088
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic" at #x0000000010000088
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000090
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::result::unwrap_failed" at #x0000000010000090
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000098
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::panicking::panic" at #x0000000010000098
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000a0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_len_fail" at #x00000000100000a0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000a8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic_fmt" at #x00000000100000a8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000b0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_overflow_fail" at #x00000000100000b0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000b8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic_handler" at #x00000000100000b8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Done allocating global variables and functions
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Adding var Number(0) = (declare-fun @MaxLeak_%0_0 () (_ BitVec 32))
+[2021-05-14T13:36:31Z INFO  haybaleMPC::project] Parsing bitcode in file tests/newfiles/declassified.bc
+[2021-05-14T13:36:31Z DEBUG llvm_ir::module] Creating a Module from path "tests/newfiles/declassified.bc"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::module] Created a MemoryBuffer
+[2021-05-14T13:36:31Z DEBUG llvm_ir::module] Parsed bitcode to llvm_sys module
+[2021-05-14T13:36:31Z DEBUG llvm_ir::module] Creating a Module from an LLVMModuleRef
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "declassify"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 1 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 1 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 5 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(1)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %2 = alloca i8, align 1"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %3 = zext i1 %0 to i8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 %3, i8* %2, align 1"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %2, metadata !11, metadata !DIExpression()), !dbg !12"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = load i8, i8* %2, align 1, !dbg !13"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = trunc i8 %4 to i1, !dbg !13"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i1 %5, !dbg !14"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "Millionaire"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 2 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 4 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 10 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(2)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %3 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !19, metadata !DIExpression()), !dbg !20"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !21, metadata !DIExpression()), !dbg !22"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = load i32, i32* %4, align 4, !dbg !15"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = load i32, i32* %5, align 4, !dbg !17"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = icmp sgt i32 %6, %7, !dbg !18"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = call zeroext i1 @declassify(i1 zeroext %8), !dbg !19"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %9, label %10, label %11, !dbg !20"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(10)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 1, i32* %3, align 4, !dbg !21"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %12, !dbg !21"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(11)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %3, align 4, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %12, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(12)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %13 = load i32, i32* %3, align 4, !dbg !25"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %13, !dbg !25"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "Max"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 3 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 5 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 19 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(3)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = alloca i8, align 1"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !37, metadata !DIExpression()), !dbg !38"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !39, metadata !DIExpression()), !dbg !40"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %2, i32* %6, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %6, metadata !41, metadata !DIExpression()), !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %7, metadata !43, metadata !DIExpression()), !dbg !45"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 97, i8* %7, align 1, !dbg !19"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %8, metadata !46, metadata !DIExpression()), !dbg !47"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = load i32, i32* %4, align 4, !dbg !22"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %9, i32* %8, align 4, !dbg !21"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %10 = load i32, i32* %8, align 4, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %11 = load i32, i32* %5, align 4, !dbg !25"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %12 = icmp slt i32 %10, %11, !dbg !26"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %12, label %13, label %15, !dbg !27"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(13)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 98, i8* %7, align 1, !dbg !28"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %14 = load i32, i32* %5, align 4, !dbg !30"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %14, i32* %8, align 4, !dbg !31"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %15, !dbg !32"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(15)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %16 = load i32, i32* %8, align 4, !dbg !33"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %17 = load i32, i32* %6, align 4, !dbg !35"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %18 = icmp slt i32 %16, %17, !dbg !36"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %19 = call zeroext i1 @declassify(i1 zeroext %18), !dbg !37"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %19, label %20, label %21, !dbg !38"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(20)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 99, i8* %7, align 1, !dbg !39"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %21, !dbg !41"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(21)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %22 = load i8, i8* %7, align 1, !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %23 = sext i8 %22 to i32, !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %23, !dbg !43"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "MaxLeak"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 3 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 5 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 19 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(3)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %4 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = alloca i8, align 1"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %0, i32* %4, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %4, metadata !71, metadata !DIExpression()), !dbg !72"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %5, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %5, metadata !73, metadata !DIExpression()), !dbg !74"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %2, i32* %6, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %6, metadata !75, metadata !DIExpression()), !dbg !76"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i8* %7, metadata !77, metadata !DIExpression()), !dbg !78"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 97, i8* %7, align 1, !dbg !19"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %8, metadata !79, metadata !DIExpression()), !dbg !80"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = load i32, i32* %4, align 4, !dbg !22"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %9, i32* %8, align 4, !dbg !21"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %10 = load i32, i32* %8, align 4, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %11 = load i32, i32* %5, align 4, !dbg !25"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %12 = icmp slt i32 %10, %11, !dbg !26"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %13 = call zeroext i1 @declassify(i1 zeroext %12), !dbg !27"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %13, label %14, label %16, !dbg !28"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(14)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 98, i8* %7, align 1, !dbg !29"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %15 = load i32, i32* %5, align 4, !dbg !31"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %15, i32* %8, align 4, !dbg !32"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %16, !dbg !33"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(16)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %17 = load i32, i32* %8, align 4, !dbg !34"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %18 = load i32, i32* %6, align 4, !dbg !36"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %19 = icmp slt i32 %17, %18, !dbg !37"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %19, label %20, label %21, !dbg !38"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(20)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8 99, i8* %7, align 1, !dbg !39"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %21, !dbg !41"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(21)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %22 = load i8, i8* %7, align 1, !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %23 = sext i8 %22 to i32, !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 %23, !dbg !43"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "Intersection"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 4 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 17 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 74 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(4)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %5 = alloca i32*, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %6 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %7 = alloca i32*, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %8 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %9 = alloca i8*, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %10 = alloca i64, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %11 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %12 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %13 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32* %0, i32** %5, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32** %5, metadata !107, metadata !DIExpression()), !dbg !108"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %1, i32* %6, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %6, metadata !109, metadata !DIExpression()), !dbg !110"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32* %2, i32** %7, align 8"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32** %7, metadata !111, metadata !DIExpression()), !dbg !112"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %3, i32* %8, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %8, metadata !113, metadata !DIExpression()), !dbg !114"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %14 = load i32, i32* %6, align 4, !dbg !20"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %15 = load i32, i32* %8, align 4, !dbg !21"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %16 = add nsw i32 %14, %15, !dbg !22"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %17 = zext i32 %16 to i64, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %18 = call i8* @llvm.stacksave(), !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i8* %18, i8** %9, align 8, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %19 = alloca i32, i64 %17, align 16, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i64 %17, i64* %10, align 8, !dbg !23"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i64* %10, metadata !119, metadata !DIExpression()), !dbg !121"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %19, metadata !122, metadata !DIExpression()), !dbg !126"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %11, metadata !127, metadata !DIExpression()), !dbg !129"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %11, align 4, !dbg !34"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %20, !dbg !35"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(20)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %21 = load i32, i32* %11, align 4, !dbg !36"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %22 = load i32, i32* %6, align 4, !dbg !38"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %23 = load i32, i32* %8, align 4, !dbg !39"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %24 = add nsw i32 %22, %23, !dbg !40"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %25 = icmp slt i32 %21, %24, !dbg !41"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %25, label %26, label %33, !dbg !42"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(26)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %27 = load i32, i32* %11, align 4, !dbg !43"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %28 = sext i32 %27 to i64, !dbg !45"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %29 = getelementptr inbounds i32, i32* %19, i64 %28, !dbg !45"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %29, align 4, !dbg !46"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %30, !dbg !47"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(30)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %31 = load i32, i32* %11, align 4, !dbg !48"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %32 = add nsw i32 %31, 1, !dbg !48"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %32, i32* %11, align 4, !dbg !48"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %20, !dbg !49, !llvm.loop !50"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(33)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %12, metadata !147, metadata !DIExpression()), !dbg !149"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %12, align 4, !dbg !54"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %34, !dbg !55"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(34)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %35 = load i32, i32* %12, align 4, !dbg !56"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %36 = load i32, i32* %6, align 4, !dbg !58"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %37 = icmp slt i32 %35, %36, !dbg !59"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %37, label %38, label %89, !dbg !60"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(38)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.dbg.declare(metadata i32* %13, metadata !156, metadata !DIExpression()), !dbg !159"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %13, align 4, !dbg !64"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %39, !dbg !65"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(39)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %40 = load i32, i32* %13, align 4, !dbg !66"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %41 = load i32, i32* %8, align 4, !dbg !68"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %42 = icmp slt i32 %40, %41, !dbg !69"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %42, label %43, label %88, !dbg !70"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(43)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %44 = load i32*, i32** %5, align 8, !dbg !71"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %45 = load i32, i32* %12, align 4, !dbg !74"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %46 = sext i32 %45 to i64, !dbg !71"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %47 = getelementptr inbounds i32, i32* %44, i64 %46, !dbg !71"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %48 = load i32, i32* %47, align 4, !dbg !71"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %49 = load i32*, i32** %7, align 8, !dbg !75"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %50 = load i32, i32* %13, align 4, !dbg !76"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %51 = sext i32 %50 to i64, !dbg !75"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %52 = getelementptr inbounds i32, i32* %49, i64 %51, !dbg !75"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %53 = load i32, i32* %52, align 4, !dbg !75"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %54 = icmp eq i32 %48, %53, !dbg !77"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %54, label %55, label %68, !dbg !78"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(55)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %56 = load i32, i32* %12, align 4, !dbg !79"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %57 = sext i32 %56 to i64, !dbg !81"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %58 = getelementptr inbounds i32, i32* %19, i64 %57, !dbg !81"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 1, i32* %58, align 4, !dbg !82"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %59 = load i32, i32* %6, align 4, !dbg !83"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %60 = load i32, i32* %13, align 4, !dbg !84"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %61 = add nsw i32 %59, %60, !dbg !85"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %62 = sext i32 %61 to i64, !dbg !86"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %63 = getelementptr inbounds i32, i32* %19, i64 %62, !dbg !86"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 1, i32* %63, align 4, !dbg !87"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %64 = load i32, i32* %12, align 4, !dbg !88"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %65 = add nsw i32 %64, 1, !dbg !89"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %65, i32* %12, align 4, !dbg !90"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %66 = load i32, i32* %13, align 4, !dbg !91"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %67 = add nsw i32 %66, 1, !dbg !92"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %67, i32* %13, align 4, !dbg !93"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %87, !dbg !94"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(68)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %69 = load i32*, i32** %5, align 8, !dbg !95"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %70 = load i32, i32* %12, align 4, !dbg !98"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %71 = sext i32 %70 to i64, !dbg !95"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %72 = getelementptr inbounds i32, i32* %69, i64 %71, !dbg !95"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %73 = load i32, i32* %72, align 4, !dbg !95"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %74 = load i32*, i32** %7, align 8, !dbg !99"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %75 = load i32, i32* %13, align 4, !dbg !100"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %76 = sext i32 %75 to i64, !dbg !99"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %77 = getelementptr inbounds i32, i32* %74, i64 %76, !dbg !99"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %78 = load i32, i32* %77, align 4, !dbg !99"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %79 = icmp slt i32 %73, %78, !dbg !101"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br i1 %79, label %80, label %83, !dbg !102"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(80)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %81 = load i32, i32* %12, align 4, !dbg !103"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %82 = add nsw i32 %81, 1, !dbg !105"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %82, i32* %12, align 4, !dbg !106"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %86, !dbg !107"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(83)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %84 = load i32, i32* %13, align 4, !dbg !108"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %85 = add nsw i32 %84, 1, !dbg !110"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 %85, i32* %13, align 4, !dbg !111"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %86"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(86)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %87"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(87)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %39, !dbg !112, !llvm.loop !113"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(88)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  br label %34, !dbg !115, !llvm.loop !116"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(89)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %90 = load i8*, i8** %9, align 8, !dbg !118"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  call void @llvm.stackrestore(i8* %90), !dbg !118"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32* %19, !dbg !118"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Processing func "main"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected info on 0 parameters
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 1 basic blocks
+[2021-05-14T13:36:31Z DEBUG llvm_ir::function] Collected names of 1 values
+[2021-05-14T13:36:31Z DEBUG llvm_ir::basicblock] Processing a basic block named Number(0)
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  %1 = alloca i32, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::instruction] Processing instruction "  store i32 0, i32* %1, align 4"
+[2021-05-14T13:36:31Z DEBUG llvm_ir::terminator] Processing terminator "  ret i32 0, !dbg !11"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing function Intersection
+[2021-05-14T13:36:31Z INFO  haybaleMPC::state] Allocating global variables and functions
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocating global variables
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocating functions
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000000
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "declassify" at #x0000000010000000
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("declassify") (public, strong) at #x0000000010000000
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000008
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "Millionaire" at #x0000000010000008
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("Millionaire") (public, strong) at #x0000000010000008
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000010
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "Max" at #x0000000010000010
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("Max") (public, strong) at #x0000000010000010
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000018
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "MaxLeak" at #x0000000010000018
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("MaxLeak") (public, strong) at #x0000000010000018
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000020
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "Intersection" at #x0000000010000020
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("Intersection") (public, strong) at #x0000000010000020
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000028
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated "main" at #x0000000010000028
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::global_allocations] Allocating Name("main") (public, strong) at #x0000000010000028
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocating function hooks
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000030
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_end_catch" at #x0000000010000030
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000038
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "llvm.eh.typeid.for" at #x0000000010000038
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000040
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_throw" at #x0000000010000040
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000048
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "realloc" at #x0000000010000048
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000050
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_begin_catch" at #x0000000010000050
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000058
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "free" at #x0000000010000058
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000060
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "exit" at #x0000000010000060
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000068
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "malloc" at #x0000000010000068
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000070
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "calloc" at #x0000000010000070
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000078
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "__cxa_allocate_exception" at #x0000000010000078
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000080
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_overflow_fail" at #x0000000010000080
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000088
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::panicking::panic" at #x0000000010000088
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000090
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_order_fail" at #x0000000010000090
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000098
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::panicking::panic_bounds_check" at #x0000000010000098
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000a0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::result::unwrap_failed" at #x00000000100000a0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000a8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic_handler" at #x00000000100000a8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000b0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "core::slice::slice_index_len_fail" at #x00000000100000b0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000b8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic" at #x00000000100000b8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000c0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Allocated hook for "std::panicking::begin_panic_fmt" at #x00000000100000c0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Done allocating global variables and functions
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Adding var Number(0) = (declare-fun @Intersection_%0_0 () (_ BitVec 64))
     
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Adding var Number(1) = (declare-fun @MaxLeak_%1_0 () (_ BitVec 32))
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 80 bits at 0x100000d0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Adding var Number(1) = (declare-fun @Intersection_%1_0 () (_ BitVec 32))
     
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Adding var Number(2) = (declare-fun @MaxLeak_%2_0 () (_ BitVec 32))
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Adding var Number(2) = (declare-fun @Intersection_%2_0 () (_ BitVec 64))
     
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Beginning symex in function "MaxLeak"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(3) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %3, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(4), alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x100000c0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(4) = #x00000000100000c0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(5), alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x100000c4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(5) = #x00000000100000c4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(6), alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x100000c8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(6) = #x00000000100000c8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 8 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(7), alignment: 1, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 8 bits at 0x100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(7) = #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(8), alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(8) = #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(4), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(0), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun x () (_ BitVec 32))
-     to mem address #x00000000100000c0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 30, col: Some(17), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %3 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(5), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(1), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun y () (_ BitVec 32))
-     to mem address #x00000000100000c4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 30, col: Some(24), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %3 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(6), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(2), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun z () (_ BitVec 32))
-     to mem address #x00000000100000c8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 30, col: Some(31), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %3 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 31, col: Some(10), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %3 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, value: ConstantOperand(ConstantRef(Int { bits: 8, value: 97 })), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 31, col: Some(10), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing #x61 to mem address #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 32, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %3 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(4), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(9), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 32, col: Some(15), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000c0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun x () (_ BitVec 32))
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 80 bits at 0x100000e0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Adding var Number(3) = (declare-fun @Intersection_%3_0 () (_ BitVec 32))
     
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(9) = (declare-fun x () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(9), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 32, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun x () (_ BitVec 32))
-     to mem address #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(10), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 33, col: Some(20), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun x () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(10) = (declare-fun x () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(5), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(11), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 33, col: Some(26), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000c4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(11) = (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing icmp ICmp { predicate: SLT, operand0: LocalOperand { name: Number(10), ty: TypeRef(IntegerType { bits: 32 }) }, operand1: LocalOperand { name: Number(11), ty: TypeRef(IntegerType { bits: 32 }) }, dest: Number(12), debugloc: Some(DebugLoc { line: 33, col: Some(24), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(12) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("declassify"), ty: TypeRef(FuncType { result_type: TypeRef(IntegerType { bits: 1 }), param_types: [TypeRef(IntegerType { bits: 1 })], is_var_arg: false }) }))), arguments: [(LocalOperand { name: Number(12), ty: TypeRef(IntegerType { bits: 1 }) }, [ZeroExt])], return_attributes: [ZeroExt], dest: Some(Number(13)), function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 33, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter NoHookActive in symex
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(0) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Entering function "declassify"in module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(1) in function declassify
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: declassify, bb %1, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 8 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(2), alignment: 1, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::alloc] Allocated 8 bits at 0x100000d4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(2) = #x00000000100000d4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing zext ZExt { operand: LocalOperand { name: Number(0), ty: TypeRef(IntegerType { bits: 1 }) }, to_type: TypeRef(IntegerType { bits: 8 }), dest: Number(3), debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(3) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (concat #b0000000 (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(2), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, value: LocalOperand { name: Number(3), ty: TypeRef(IntegerType { bits: 8 }) }, volatile: false, atomicity: None, alignment: 1, debugloc: None }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (concat #b0000000 (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))) to mem address #x00000000100000d4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 5, col: Some(22), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %1 in function "declassify", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(2), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, dest: Number(4), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 6, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 8 bits from mem at #x00000000100000d4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (concat #b0000000 (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(4) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (concat #b0000000 (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing trunc Trunc { operand: LocalOperand { name: Number(4), ty: TypeRef(IntegerType { bits: 8 }) }, to_type: TypeRef(IntegerType { bits: 1 }), dest: Number(5), debugloc: Some(DebugLoc { line: 6, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(5) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing return Ret { return_operand: Some(LocalOperand { name: Number(5), ty: TypeRef(IntegerType { bits: 1 }) }), debugloc: Some(DebugLoc { line: 6, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit symexing return
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %3, starting at terminator}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] RETURN VALUE AT ELSEIF "declassify"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] PUSH REVEALED  id 144, value (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(13) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Completed ordinary return to caller
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Leaving function "declassify", continuing in caller "MaxLeak" (bb %3) in module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing condbr CondBr { condition: LocalOperand { name: Number(13), ty: TypeRef(IntegerType { bits: 1 }) }, true_dest: Number(14), false_dest: Number(16), debugloc: Some(DebugLoc { line: 33, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] both true and false branches are feasible
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Saving a backtracking point, which would enter bb Number(16) with constraint (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Condbr Match: 
-    id: 144, value: (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(14) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %14, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, value: ConstantOperand(ConstantRef(Int { bits: 8, value: 98 })), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 34, col: Some(11), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing #x62 to mem address #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(5), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(15), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 35, col: Some(15), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000c4
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(15) = (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(15), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 35, col: Some(13), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun y () (_ BitVec 32))
-     to mem address #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing br Br { dest: Number(16), debugloc: Some(DebugLoc { line: 36, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(16) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %16, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(17), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 37, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(17) = (declare-fun y () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(6), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(18), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 37, col: Some(15), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000c8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun z () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(18) = (declare-fun z () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing icmp ICmp { predicate: SLT, operand0: LocalOperand { name: Number(17), ty: TypeRef(IntegerType { bits: 32 }) }, operand1: LocalOperand { name: Number(18), ty: TypeRef(IntegerType { bits: 32 }) }, dest: Number(19), debugloc: Some(DebugLoc { line: 37, col: Some(13), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(19) = (let (($e1 ((_ extract 31 31) y))) (let (($e2 ((_ extract 31 31) z))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) y) ((_ extract 30 0) z))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing condbr CondBr { condition: LocalOperand { name: Number(19), ty: TypeRef(IntegerType { bits: 1 }) }, true_dest: Number(20), false_dest: Number(21), debugloc: Some(DebugLoc { line: 37, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] both true and false branches are feasible
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Saving a backtracking point, which would enter bb Number(21) with constraint (let (($e1 ((_ extract 31 31) y))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) y) ((_ extract 30 0) z))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(20) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %20, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, value: ConstantOperand(ConstantRef(Int { bits: 8, value: 99 })), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 38, col: Some(11), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing #x63 to mem address #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing br Br { dest: Number(21), debugloc: Some(DebugLoc { line: 39, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(21) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %21, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, dest: Number(22), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 8 bits from mem at #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is #x63
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(22) = #x63
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing sext SExt { operand: LocalOperand { name: Number(22), ty: TypeRef(IntegerType { bits: 8 }) }, to_type: TypeRef(IntegerType { bits: 32 }), dest: Number(23), debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(23) = #x00000063
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing return Ret { return_operand: Some(LocalOperand { name: Number(23), ty: TypeRef(IntegerType { bits: 32 }) }), debugloc: Some(DebugLoc { line: 40, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit symexing return
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Update template reveald bv list
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Updated revealmap
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Revealed Constraints Solver Sat Result: Ok(true)
-Verification succeed at:
-expr: "#x00000063",
-control flow: [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Finish a next call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: requesting next path
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Extract last bv: Some((let (($e1 ((_ extract 31 31) y))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) y) ((_ extract 30 0) z))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Reverting to backtracking point <BacktrackPoint to execute bb %21 with constraint (let (($e1 ((_ extract 31 31) y))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) y) ((_ extract 30 0) z))) #b1 #b0))))) and 0 frames on the callstack>
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Reverted to backtrack point; 1 more backtrack points available
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Continuing in bb %21 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter revealed : prior_btp = 
-    [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit revealed : prior_btp = 
-    [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] FIND BACKTRACK UNMATCH 
-    id: 144, 
-    value: (Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true)), 
-    id: 166, 
-    value: (let (($e1 ((_ extract 31 31) y))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) y) ((_ extract 30 0) z))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(21) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %21, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, dest: Number(22), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 8 bits from mem at #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is #x62
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(22) = #x62
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing sext SExt { operand: LocalOperand { name: Number(22), ty: TypeRef(IntegerType { bits: 8 }) }, to_type: TypeRef(IntegerType { bits: 32 }), dest: Number(23), debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(23) = #x00000062
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing return Ret { return_operand: Some(LocalOperand { name: Number(23), ty: TypeRef(IntegerType { bits: 32 }) }), debugloc: Some(DebugLoc { line: 40, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit symexing return
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Update template reveald bv list
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Updated revealmap
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Revealed Constraints Solver Sat Result: Ok(true)
-Verification succeed at:
-expr: "#x00000062",
-control flow: [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Finish a next call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: requesting next path
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Extract last bv: Some((let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Reverting to backtracking point <BacktrackPoint to execute bb %16 with constraint (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0))))) and 0 frames on the callstack>
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Reverted to backtrack point; 0 more backtrack points available
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Continuing in bb %16 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter revealed : prior_btp = 
-    [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit revealed : prior_btp = 
-    [(Number(13), 144, (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))), Some(true))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] FIND BACKTRACK MATCH 
-    id: 144,
-    value: (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) y))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) y))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(16) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %16, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(17), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 37, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000d0
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun x () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(17) = (declare-fun x () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(6), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(18), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 37, col: Some(15), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000c8
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is (declare-fun z () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(18) = (declare-fun z () (_ BitVec 32))
-    
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing icmp ICmp { predicate: SLT, operand0: LocalOperand { name: Number(17), ty: TypeRef(IntegerType { bits: 32 }) }, operand1: LocalOperand { name: Number(18), ty: TypeRef(IntegerType { bits: 32 }) }, dest: Number(19), debugloc: Some(DebugLoc { line: 37, col: Some(13), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(19) = (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) z))) (bvnot (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) z))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing condbr CondBr { condition: LocalOperand { name: Number(19), ty: TypeRef(IntegerType { bits: 1 }) }, true_dest: Number(20), false_dest: Number(21), debugloc: Some(DebugLoc { line: 37, col: Some(9), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] both true and false branches are feasible
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Saving a backtracking point, which would enter bb Number(21) with constraint (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) z))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit condbr match
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(20) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %20, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, value: ConstantOperand(ConstantRef(Int { bits: 8, value: 99 })), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 38, col: Some(11), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Writing #x63 to mem address #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing br Br { dest: Number(21), debugloc: Some(DebugLoc { line: 39, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(21) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %21, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, dest: Number(22), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 8 bits from mem at #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is #x63
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(22) = #x63
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing sext SExt { operand: LocalOperand { name: Number(22), ty: TypeRef(IntegerType { bits: 8 }) }, to_type: TypeRef(IntegerType { bits: 32 }), dest: Number(23), debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(23) = #x00000063
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing return Ret { return_operand: Some(LocalOperand { name: Number(23), ty: TypeRef(IntegerType { bits: 32 }) }), debugloc: Some(DebugLoc { line: 40, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit symexing return
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Update template reveald bv list
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Updated revealmap
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Revealed Constraints Solver Sat Result: Ok(false)
-Verification failed at:
-expr: "#x00000063",
-control flow: [(Number(13), 144, false, Some(false))]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Finish a next call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: requesting next path
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Extract last bv: Some((let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) z))) #b1 #b0))))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Reverting to backtracking point <BacktrackPoint to execute bb %21 with constraint (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) z))) #b1 #b0))))) and 0 frames on the callstack>
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Reverted to backtrack point; 0 more backtrack points available
-[2021-05-14T12:40:56Z INFO  haybaleMPC::symex] Continuing in bb %21 in function "MaxLeak", module "tests/newfiles/declassified.bc"
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Enter revealed : prior_btp = 
-    [(Number(13), 144, false, Some(false))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit revealed : prior_btp = 
-    [(Number(13), 144, false, Some(false))],
-    [(144, None)]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] FIND BACKTRACK UNMATCH 
-    id: 144, 
-    value: (Number(13), 144, false, Some(false)), 
-    id: 186, 
-    value: (let (($e1 ((_ extract 31 31) x))) (let (($e2 ((_ extract 31 31) z))) (bvand (bvnot (bvand $e1 (bvnot $e2))) (bvnot (ite (and (= $e1 $e2) (bvult ((_ extract 30 0) x) ((_ extract 30 0) z))) #b1 #b0)))))
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit Backtrack
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing basic block Number(21) in function MaxLeak
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: MaxLeak, bb %21, starting at instr 0}
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }) }, dest: Number(22), volatile: false, atomicity: None, alignment: 1, debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Reading 8 bits from mem at #x00000000100000cc
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::simple_memory] Value read is #x61
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(22) = #x61
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing sext SExt { operand: LocalOperand { name: Number(22), ty: TypeRef(IntegerType { bits: 8 }) }, to_type: TypeRef(IntegerType { bits: 32 }), dest: Number(23), debugloc: Some(DebugLoc { line: 40, col: Some(12), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::varmap] Assigning var Number(23) = #x00000061
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Symexing return Ret { return_operand: Some(LocalOperand { name: Number(23), ty: TypeRef(IntegerType { bits: 32 }) }), debugloc: Some(DebugLoc { line: 40, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Exit symexing return
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Update template reveald bv list
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Updated revealmap
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Revealed Constraints Solver Sat Result: Ok(true)
-Verification succeed at:
-expr: "#x00000061",
-control flow: [(Number(13), 144, false, Some(false))]
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Finish a next call
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: requesting next path
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Extract last bv: None
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
-[2021-05-14T12:40:56Z DEBUG haybaleMPC::symex] Finish a next call
-Exactly: {"#x00000063", "#x00000062", "#x00000061"}
-test declassified_max_leak ... ok
+[2021-05-14T13:36:31Z INFO  haybaleMPC::symex] Beginning symex in function "Intersection"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing basic block Number(4) in function Intersection
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::state] Recording a path entry {tests/newfiles/declassified.bc: Intersection, bb %4, starting at instr 0}
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(5), alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x100000f0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(5) = #x00000000100000f0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(6), alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x100000f8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(6) = #x00000000100000f8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(7), alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000100
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(7) = #x0000000010000100
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(8), alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x10000108
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(8) = #x0000000010000108
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(9), alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000110
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(9) = #x0000000010000110
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 64 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(10), alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 64 bits at 0x10000118
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(10) = #x0000000010000118
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(11), alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x10000120
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(11) = #x0000000010000120
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(12), alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x10000124
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(12) = #x0000000010000124
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing alloca Alloca { allocated_type: TypeRef(IntegerType { bits: 32 }), num_elements: ConstantOperand(ConstantRef(Int { bits: 32, value: 1 })), dest: Number(13), alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::alloc] Allocated 32 bits at 0x10000128
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(13) = #x0000000010000128
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(5), ty: TypeRef(PointerType { pointee_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }), addr_space: 0 }) }, value: LocalOperand { name: Number(0), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, volatile: false, atomicity: None, alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Writing (declare-fun a () (_ BitVec 64))
+     to mem address #x00000000100000f0
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 43, col: Some(23), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %4 in function "Intersection", module "tests/newfiles/declassified.bc"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(6), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(1), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Writing #x0000000a to mem address #x00000000100000f8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 43, col: Some(32), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %4 in function "Intersection", module "tests/newfiles/declassified.bc"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(7), ty: TypeRef(PointerType { pointee_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }), addr_space: 0 }) }, value: LocalOperand { name: Number(2), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, volatile: false, atomicity: None, alignment: 8, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Writing #x00000000100000e0 to mem address #x0000000010000100
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 43, col: Some(42), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %4 in function "Intersection", module "tests/newfiles/declassified.bc"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing store Store { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, value: LocalOperand { name: Number(3), ty: TypeRef(IntegerType { bits: 32 }) }, volatile: false, atomicity: None, alignment: 4, debugloc: None }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Writing #x0000000a to mem address #x0000000010000108
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.dbg.declare"), ty: TypeRef(FuncType { result_type: TypeRef(VoidType), param_types: [TypeRef(MetadataType), TypeRef(MetadataType), TypeRef(MetadataType)], is_var_arg: false }) }))), arguments: [(MetadataOperand, []), (MetadataOperand, []), (MetadataOperand, [])], return_attributes: [], dest: None, function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 43, col: Some(51), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex]  Enter HookActive in symex_call
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Processing hook for intrinsic "llvm.dbg.declare"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Done processing hook for intrinsic "llvm.dbg.declare"; continuing in bb %4 in function "Intersection", module "tests/newfiles/declassified.bc"
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(6), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(14), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 44, col: Some(13), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x00000000100000f8
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Value read is #x0000000a
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(14) = #x0000000a
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing load Load { address: LocalOperand { name: Number(8), ty: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 32 }), addr_space: 0 }) }, dest: Number(15), volatile: false, atomicity: None, alignment: 4, debugloc: Some(DebugLoc { line: 44, col: Some(18), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Reading 32 bits from mem at #x0000000010000108
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::simple_memory] Value read is #x0000000a
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(15) = #x0000000a
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing binop Add(Add { operand0: LocalOperand { name: Number(14), ty: TypeRef(IntegerType { bits: 32 }) }, operand1: LocalOperand { name: Number(15), ty: TypeRef(IntegerType { bits: 32 }) }, dest: Number(16), debugloc: Some(DebugLoc { line: 44, col: Some(17), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) })
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(16) = #x00000014
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing zext ZExt { operand: LocalOperand { name: Number(16), ty: TypeRef(IntegerType { bits: 32 }) }, to_type: TypeRef(IntegerType { bits: 64 }), dest: Number(17), debugloc: Some(DebugLoc { line: 44, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::varmap] Assigning var Number(17) = #x0000000000000014
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Symexing call Call { function: Right(ConstantOperand(ConstantRef(GlobalReference { name: Name("llvm.stacksave"), ty: TypeRef(FuncType { result_type: TypeRef(PointerType { pointee_type: TypeRef(IntegerType { bits: 8 }), addr_space: 0 }), param_types: [], is_var_arg: false }) }))), arguments: [], return_attributes: [], dest: Some(Number(18)), function_attributes: [], is_tail_call: false, calling_convention: C, debugloc: Some(DebugLoc { line: 44, col: Some(5), filename: "declassified.c", directory: Some("/home/fanyx/projects/haybaleMPC/tests/newfiles") }) }
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Enter NoHookActive in symex
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] ExecutionManager: finish requseting retval
+[2021-05-14T13:36:31Z DEBUG haybaleMPC::symex] Finish a next call
+thread 'declassified_psi' panicked at '`FunctionNotFound`: encountered a call of a function named "llvm.stacksave", but failed to find an LLVM definition, a function hook, or a built-in handler for it
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.03s
+Backtrace:
+  #1: {tests/newfiles/declassified.bc: Intersection, bb %4, instr 21}
+         (/home/fanyx/projects/haybaleMPC/tests/newfiles/declassified.c, line 44, col 5)
 
+note: For a dump of the path that led to this error, rerun with the environment variable `HAYBALE_DUMP_PATH` set to:
+        `LLVM` for a list of the LLVM basic blocks in the path
+        `SRC` for a list of the source-language locations in the path
+        `BOTH` for both of the above
+      To get source-language locations, the LLVM bitcode must also contain
+      debuginfo. For example, C/C++ or Rust sources must be compiled with the
+      `-g` flag to `clang`, `clang++`, or `rustc`.
+
+note: For a dump of variable values at time of error, rerun with `HAYBALE_DUMP_VARS=1` environment variable.
+
+note: to enable detailed logs, ensure that debug-level logging messages are visible.
+  See the documentation for your chosen logging backend (e.g., env_logger, log4rs, etc)
+  for help with configuration.
+
+', src/declassify_verification.rs:76:23
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+test declassified_psi ... FAILED
+
+failures:
+
+failures:
+    declassified_psi
+
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.02s
+
+error: test failed, to rerun pass '-p haybaleMPC --test mpc_declassified_tests'

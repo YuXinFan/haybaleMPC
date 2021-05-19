@@ -39,7 +39,31 @@ int MaxLeak(int a, int b, int c) {
     }
     return m;
 }
-
+// suppose a and b are ordered from small to large
+int* Intersection(int a[], int lena, int b[], int lenb) {
+    int * ret = (int *) malloc((lena+lenb)*sizeof(int));
+    int ret[lena+lenb];
+    for (int i = 0; i < lena+lenb; i++) {
+        ret[i] = 0;
+    }
+    for (int i = 0; i < lena;) {
+        for (int j = 0; j < lenb;) {
+            if (a[i] == b[j]) {
+                ret[i] = 1;
+                ret[lena+j] = 1;
+                i = i + 1;
+                j = j + 1;
+            }else {
+                if (a[i] < b[j]) {
+                    i = i + 1;
+                }else {
+                    j = j + 1;
+                }
+            }
+        }
+    }
+    return ret;
+}
 // int[] SetIntersection(int[] a, int[] b) {
 //     int lena = sizeof(a)/sizeof(a[0]);
 //     int lenb = sizeof(b)/sizeof(b[0]);

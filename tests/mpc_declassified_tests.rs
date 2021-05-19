@@ -64,3 +64,29 @@ fn declassified_max_leak() {
         }
     }
 }
+#[test]
+fn declassified_psi() {
+    let funcname = "Intersection";
+    init_logging();
+    let proj = get_project();
+    let vecparams = vec!(ParameterVal::PointerToAllocated(10), ParameterVal::ExactValue(10), ParameterVal::PointerToAllocated(10), ParameterVal::ExactValue(10));
+    let vecsymbols = vec!(String::from("a"), String::from("lena"), String::from("b"), String::from("lenbc"));
+    let mut conf : Config<backend::DefaultBackend> = Config::default();
+    conf.loop_bound = 1000;
+    let args = verify_declassify_leakages_of_func(
+        funcname, 
+        &proj, 
+        conf,
+        Some(vecparams),
+        Some(vecsymbols),
+        None,
+        100    );
+    match args  {
+        PossibleSolutions::Exactly(hs) => {
+            println!("Exactly: {:?}", hs);
+        },
+        PossibleSolutions::AtLeast(hs) => {
+            println!("AtLeast: {:?}", hs);
+        }
+    }
+}
