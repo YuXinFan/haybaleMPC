@@ -9,6 +9,7 @@ use crate::DefaultBackend;
 use crate::Config;
 use crate::symex_function;
 use crate::symex_function2;
+use crate::ReturnType;
 use crate::Project;
 use llvm_ir::*;
 
@@ -43,10 +44,11 @@ pub fn verify_declassify_leakages_of_func<'p>(
     symbols: Option<Vec<String>>,
     thrown_size: Option<u32>,
     n: usize,
+    rtype: ReturnType,
 ) -> PossibleSolutions<String> {
     //init_log();
     let mut em: ExecutionManager<DefaultBackend> =
-    symex_function2(funcname, project, config, params, symbols).unwrap(); // EM
+    symex_function2(funcname, project, config, params, symbols, rtype).unwrap(); // EM
 
     let return_width = match em.func().return_type.as_ref() {
         Type::VoidType => {
