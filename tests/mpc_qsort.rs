@@ -43,9 +43,11 @@ fn declassified_qsort() {
     match args  { 
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);
+            println!("Exact {} different outputs", hs.len());
         },
         PossibleSolutions::AtLeast(hs) => {
             println!("AtLeast: {:?}", hs);
+            println!("size: {}", hs.len());
         }
     }
 }

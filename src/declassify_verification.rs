@@ -91,7 +91,8 @@ pub fn verify_declassify_leakages_of_func<'p>(
             Ok(ReturnValue::Return(bvretval)) => {
                 assert_eq!(bvretval.get_width(), return_width);
                 // rule out all the returned values we already have - we're interested in new values
-                let bv_expr = format!("{:?}", bvretval); 
+                let bv_expr = em.get_return_symbol(&bvretval);
+                //let bv_expr = format!("{:?}", bvretval); 
                 //
                 let bv_expr: String = String::from(bvretval.get_symbol().unwrap_or(&bv_expr));
                 possibol_expr.insert(bv_expr);

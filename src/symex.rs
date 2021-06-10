@@ -290,6 +290,7 @@ pub struct ExecutionManager<'p, B: Backend> {
     revealed_btp: Vec<(u32, u32)>,
     // function name of reveal function, eg declassify
     revealfunc: String,
+    revealdrop: bool,
 }
 
 impl<'p, B: Backend> ExecutionManager<'p, B> {
@@ -315,6 +316,7 @@ impl<'p, B: Backend> ExecutionManager<'p, B> {
             revealsolver: SolverRef::new(),
             revealed_btp: vec!(),
             returntype: ReturnType{isptr: false, base: String::from("int"), bits: 32, len: 1},
+            revealdrop: false
         };
         ret.revealsolver.set_opt(BtorOption::Incremental(true));
         //ret.revealsolver.set_opt(BtorOption::ModelGen(ModelGen::All));
@@ -374,58 +376,14 @@ where
         //// update revealmap
         let retvalref = &retval;
         if let Some(Ok(ReturnValue::Return(bvret))) = retvalref {
-            //self.revealsolver.push(1);
-            //self.revealsolver.pop(1);
             // get the symbol of retval bv
             let symbol = self.get_return_symbol(bvret);
-            // // check if retval bv is a pointer bv
-            // let ret_typeref = self.func.return_type.clone();
-            // let ret_type = ret_typeref.deref();
-            // match ret_type {
-            //     // ret is a pointer 
-            //     llvm_ir::Type::PointerType{pointee_type, addr_space}  => {
-            //         let item_type = pointee_type.deref();
-            //         match item_type {
-            //             llvm_ir::Type::IntegerType{bits} => {
-            //                 let mut ret_array = vec!();     // a buffer to store symbol value of each item in the array
-            //                 let whole_bits = self.state
-            //                     .get_allocation_size(&bvret)
-            //                     .expect("not a pointer by allocation function").unwrap();   // the memory size of this array in bits
-            //                 let len = (whole_bits as u32 / bits) as u32;    // the number of items in this array
-            //                 for idx in 0..len {
-            //                     let offset = self.state
-            //                         .get_offset_constant_index(item_type,idx as usize)
-            //                         .expect("can't give offset");   // offset from head address to idx item in bits
-            //                     let offset_bv = self.state.bv_from_u32(offset.0, bvret.get_width());
-            //                     let item = self.state
-            //                         .read(&bvret.add(&offset_bv), *bits)
-            //                         .expect("can't give item");
-            //                     let sym_val = match item.get_symbol(){
-            //                         Some(s) => {String::from(s)},
-            //                         None => {format!("{:?}", item)}
-            //                     };
-            //                     ret_array.push(sym_val);
-            //                 }
-            //                 symbol = format!("{:?}",ret_array);
-            //         },
-            //             _ => { panic!("ret type is a pointer to non-interger value");}
-            //         }
-            //     },
-            //     // ret is a value 
-            //     _ => {
-            //         symbol =  match bvret.get_symbol(){
-            //             Some(s) => {String::from(s)},
-            //             None => {format!("{:?}", bvret)}
-            //         }
-            //     }
-            // };
-
-            // check whether the symbol is existed
             debug!("Update temporary reveald bv list");
             if self.revealmap.contains_key(&symbol) {
                 let mut revealedvec = vec!();
                 for (name, id, bv, vb) in &self.revealed_cond {
                     let revealed_bv: <B as Backend>::BV = BV::new(self.revealsolver.clone(), 1, None );
+                    
                     revealedvec.push( (name.clone(), id.clone(), revealed_bv, vb.unwrap()) );
                 }
                 for each in self.revealmap.get(&symbol).unwrap().to_owned() {
@@ -498,7 +456,7 @@ impl<'p, B: Backend> ExecutionManager<'p, B>
 where
     B: 'p,
 {   
-    fn get_return_symbol(&mut self, ret: &B::BV) -> String {
+    pub fn get_return_symbol(&mut self, ret: &B::BV) -> String {
         let int = String::from("int");
         match &self.returntype.base {
             int => {
@@ -664,8 +622,8 @@ where
     /// `Ok(None)` if no possible paths were found.
     fn backtrack_and_continue(&mut self) -> Result<Option<ReturnValue<B::BV>>> {
         ////
-        let last_bvcond = self.state.get_last_bvcond();
-        debug!("Extract last bv: {:?}", &last_bvcond);
+        let droped_bvcond = self.state.get_last_bvcond();
+        debug!("Extract last bv: {:?}", &droped_bvcond);
         ////
         if self.state.revert_to_backtracking_point()? {
             info!(
@@ -697,20 +655,23 @@ where
             // if this backtrack drop a revealed bv, drop this reveald bv from self.revealed
             let cur_bvcond = self.state.get_last_bvcond();
             // if a item in revealed_cond has value false, it has been backtrack to, pop it
-            if let Some(v) = self.revealed_cond.last() {
-                if let Some(false) = v.3 {
-                    self.revealed_cond.pop();
-                    self.revealed_btp.pop();
+            if self.revealdrop {
+                if let Some(v) = self.revealed_cond.last() {
+                    if let Some(false) = v.3 {
+                        self.revealed_cond.pop();
+                        self.revealed_btp.pop();
+                    }
                 }
             }
-            if let Some(cur_bvcond_v) = &cur_bvcond {
+            
+            if let Some(droped_bvcond_v) = &droped_bvcond {
                 if let Some(cond_pair) = self.revealed_btp.last() {
                     if let None = self.revealed_cond.last() {
 
                     }else {
                         let mut v = self.revealed_cond.pop().unwrap();
                         // this btp is a revealed_btp
-                        if  &(v.1, cur_bvcond_v.get_id() as u32) == cond_pair  {
+                        if  &(v.1, droped_bvcond_v.get_id() as u32) == cond_pair  {
                             // update value to false
                             v.3 = Some(false);
                             // delete revealed after this btp
@@ -726,7 +687,7 @@ where
                     }
                 }
             }
-           
+            self.revealdrop = true;
             debug!("Exit Backtrack");
             ////<-
             self.symex_from_cur_loc()
@@ -2238,7 +2199,6 @@ where
             debug!("both true and false branches are feasible");
             //// when deal with revealed bv,
             //   store (revealed bv backtrackpoint, the last backtrackpoint bv) pair
-            let last_bvcond =  self.state.get_last_bvcond();
             ////
 
             // for now we choose to explore true first, and backtrack to false if necessary
@@ -2249,36 +2209,13 @@ where
             //// 
             // debug!("Assign value to revealed constraint and Update btp when at save_backtracking_point");
             // if the branch cond is in revealed, add it into revealed_cond and assign true value
-            for (name, id, bv, v) in self.revealed.iter_mut() {
+            self.revealdrop = false;
+            for (name, id, bv, v) in self.revealed.iter().rev() {
                 // update the revealed bv list with revealed value
-                if bv.get_id() == bvcond.get_id() {
+                if *id == bvcond.get_id() as u32 {
                     self.revealed_cond.push( (name.clone(), id.clone(), bv.clone(), Some(true)) );
                     self.revealed_btp.push( (bvcond.get_id() as u32, bvcond_not_id) );
-                    // match v {
-                    //     // when we first access to a revealed condition, if should have value None
-                    //     Some(b) => {
-                    //         //debug!("Add revealed constraint to control flow with exact value: \nid: {}, value: {:?}", bv.get_id(), bv);
-                    //         panic!("Assign value to revealed constraint in control flow with exactly value: \nname: {}, \nid: {}, \ncontent: {:?}, \nvalue: {}", name, bv.get_id(), bv, b);
-                    //         //*v = Some(true);
-                    //     },
-                    //     // when btp added to `revealed`, it has None value 
-                    //     None => {
-                    //         debug!("Assign value to revealed constraint in control flow: \nid: {}, value: {:?}", bv.get_id(), bv);
-                    //         *v = Some(true);
-                    //     }
-                    // }
-                    // match last_bvcond {
-                    //     // add (curr bv, last bv) to prior_btp
-                    //     Some(last_bv) => {
-                    //         self.prior_btp.push( ( bv.get_id() as u32, Some(last_bv.get_id() as u32) ) );
-                    //         debug!("Add to prior_btp: {:?}", ( bv.get_id() as u32, Some(last_bv.get_id() as u32) ))
-                    //     },
-                    //     None => {
-                    //         self.prior_btp.push( ( bv.get_id() as u32, None ) );
-                    //         debug!("Add to prior_btp: {:?}", ( bv.get_id() as u32, "None" ))
-                    //     }
-                    // }
-                    break;
+                    self.revealdrop = false;
                 }
             }
             debug!("Complete Assign and Update");
