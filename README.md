@@ -3,9 +3,16 @@ Based on haybale 0.7.0-pre git commit log 8947939a2d3e2f05fd3c3060912d0ab94d98e0
 
 ## Install
 - install rust, set rustc version to 1.50.0
-- install llvm version 11, export llvm-prefix-110 to shell 
-- install boolector
-- link boolector 
+- install llvm version 11, export llvm in path 
+- install boolector, build at shared-library mode
+- export llvm-prefix-110 in path 
+- export boolector in rust load path
+
+```bash
+export LLVM_SYS_110_PREFIX=<path-to-llvm>
+export LD_LIBRARY_PATH=<path-to-boolector>/build/lib:$LD_LIBRARY_PATH
+export PATH="<path-to-llvm>/bin:$PATH"
+```
 
 ## Notice
 ```rust
