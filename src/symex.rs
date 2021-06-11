@@ -641,53 +641,68 @@ where
                 }
             );
             ////->
-            // change revealed bv value from true to false when it is current backtrack point
-            // delete revealed bv after this current backtrack point
-            // 1. check is this btp is a revealed
-            // 2. find it 
-            // 3. update it to false
-            // 4. delete bvs after it both in revealed and revealed_cond
+            // 1@change revealed bv value from true to false when it is current backtrack point
+            // 2@update the revealed_cond and revealed
+            // 1. if this btp is revealed, delete last item in revealed_cond until it is true value
+            // 2. update this cond to false
+            // 2. delete items in revealed after this btp
             debug!("Enter Backtrack");
             debug!("revealed content: {:?}", self.revealed);
             debug!("revealed_cond content: {:?}", self.revealed_cond);
             debug!("revealed_btp content: {:?}", self.revealed_btp);
-            // check (top revealed bv id, last backtrackpoint bv id) =? 
-            // if this backtrack drop a revealed bv, drop this reveald bv from self.revealed
-            let cur_bvcond = self.state.get_last_bvcond();
-            // if a item in revealed_cond has value false, it has been backtrack to, pop it
-            if self.revealdrop {
-                if let Some(v) = self.revealed_cond.last() {
-                    if let Some(false) = v.3 {
+            
+            if self.revealed_cond.len() > 0 {
+                if let Some(droped) = &droped_bvcond {
+                    let droped_id = droped.get_id() as u32;
+                    let mut cond_to_drop = 0;
+                    let mut is_revealed = false;
+                    for (v, btp) in self.revealed_cond
+                                                                                .iter()
+                                                                                .rev()
+                                                                                .zip(
+                                                                                    self.revealed_btp
+                                                                                    .iter()
+                                                                                    .rev()
+                                                                                ) {
+                        if v.3 == Some(false) {
+                            cond_to_drop  = cond_to_drop + 1;
+                            continue;
+                        }
+                        let cond_id = v.1;
+                        if btp == &(cond_id, droped_id){
+                            // this btp is a revealed
+                            is_revealed = true;
+                            break;
+                        }
+                        break;
+                    }
+                    while cond_to_drop > 0 {
                         self.revealed_cond.pop();
                         self.revealed_btp.pop();
+                        cond_to_drop -= 1;
                     }
-                }
-            }
-            
-            if let Some(droped_bvcond_v) = &droped_bvcond {
-                if let Some(cond_pair) = self.revealed_btp.last() {
-                    if let None = self.revealed_cond.last() {
-
-                    }else {
-                        let mut v = self.revealed_cond.pop().unwrap();
-                        // this btp is a revealed_btp
-                        if  &(v.1, droped_bvcond_v.get_id() as u32) == cond_pair  {
-                            // update value to false
-                            v.3 = Some(false);
-                            // delete revealed after this btp
-                            while self.revealed.len() > 0  {
-                                if self.revealed.last().unwrap().1 == v.1 {
-                                    break;
-                                }else {
-                                    self.revealed.pop();
-                                }
+                    if is_revealed {
+                        // this btp is a revealed
+                        match self.revealed_cond.pop() {
+                            Some(mut v) => {
+                                v.3 = Some(false);
+                                self.revealed_cond.push(v);
+                            },
+                            None => {
+                                panic!("find revealed with none");
                             }
                         }
-                        self.revealed_cond.push(v);
+                        while self.revealed.len() > 0 {
+                            if self.revealed.last().unwrap().1 != self.revealed_cond.last().unwrap().1 {
+                                self.revealed.pop();
+                            }else {
+                                break;
+                            }
+                        }
                     }
                 }
             }
-            self.revealdrop = true;
+           
             debug!("Exit Backtrack");
             ////<-
             self.symex_from_cur_loc()
@@ -2209,7 +2224,6 @@ where
             //// 
             // debug!("Assign value to revealed constraint and Update btp when at save_backtracking_point");
             // if the branch cond is in revealed, add it into revealed_cond and assign true value
-            self.revealdrop = false;
             for (name, id, bv, v) in self.revealed.iter().rev() {
                 // update the revealed bv list with revealed value
                 if *id == bvcond.get_id() as u32 {
@@ -2228,6 +2242,13 @@ where
             self.symex_from_cur_loc_through_end_of_function()
         } else if true_feasible {
             debug!("only the true branch is feasible");
+            // for (name, id, bv, v) in self.revealed.iter().rev() {
+            //     // update the revealed bv list with revealed value
+            //     if *id == bvcond.get_id() as u32 {
+            //         self.revealed_cond.push( (name.clone(), id.clone(), bv.clone(), Some(true)) );
+            //     }
+            // }
+
             bvcond.assert()?; // unnecessary, but may help Boolector more than it hurts?
             self.state
                 .cur_loc

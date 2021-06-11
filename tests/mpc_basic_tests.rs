@@ -22,6 +22,12 @@ fn basic_dummy() {
     let proj = get_project();
     let vecparams = vec!(ParameterVal::Unconstrained);
     let vecsymbols = vec!(String::from("x"));
+    let rtype = ReturnType{
+        isptr:false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1,
+    };
     let args = verify_declassify_leakages_of_func(
         funcname, 
         &proj, 
@@ -29,7 +35,8 @@ fn basic_dummy() {
         Some(vecparams),
         Some(vecsymbols),
         None,
-        100    );
+        100,
+    rtype    );
     match args  {
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);
@@ -47,6 +54,12 @@ fn basic_add() {
     let proj = get_project();
     let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained);
     let vecsymbols = vec!(String::from("x"), String::from("y"));
+    let rtype = ReturnType{
+        isptr:false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1,
+    };
     let args = verify_declassify_leakages_of_func(
         funcname, 
         &proj, 
@@ -54,7 +67,8 @@ fn basic_add() {
         Some(vecparams),
         Some(vecsymbols),
         None,
-        100    );
+        100,
+        rtype    );
     match args  {
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);
@@ -72,6 +86,12 @@ fn basic_mul() {
     let proj = get_project();
     let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained);
     let vecsymbols = vec!(String::from("x"), String::from("y"));
+    let rtype = ReturnType{
+        isptr:false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1,
+    };
     let args = verify_declassify_leakages_of_func(
         funcname, 
         &proj, 
@@ -79,7 +99,8 @@ fn basic_mul() {
         Some(vecparams),
         Some(vecsymbols),
         None,
-        100    );
+        100,
+    rtype    );
     match args  {
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);
@@ -97,6 +118,12 @@ fn basic_max() {
     let proj = get_project();
     let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained);
     let vecsymbols = vec!(String::from("x"), String::from("y"));
+    let rtype = ReturnType{
+        isptr:false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1,
+    };
     let args = verify_declassify_leakages_of_func(
         funcname, 
         &proj, 
@@ -104,7 +131,8 @@ fn basic_max() {
         Some(vecparams),
         Some(vecsymbols),
         None,
-        100    );
+        100,
+    rtype    );
     match args  {
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);
@@ -122,6 +150,12 @@ fn basic_const() {
     let proj = get_project();
     let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::ExactValue(10));
     let vecsymbols = vec!(String::from("x"), String::from("y"));
+    let rtype = ReturnType{
+        isptr:false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1,
+    };
     let args = verify_declassify_leakages_of_func(
         funcname, 
         &proj, 
@@ -129,7 +163,8 @@ fn basic_const() {
         Some(vecparams),
         Some(vecsymbols),
         None,
-        100    );
+        100,
+    rtype    );
     match args  {
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);

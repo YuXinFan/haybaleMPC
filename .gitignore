@@ -4,6 +4,5 @@
 **/*.bak
 
 Cargo.lock
-./idea
-/.idea
 /tests/oldtests
+debug.txt

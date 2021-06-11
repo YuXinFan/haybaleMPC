@@ -15,7 +15,7 @@ fn get_project() -> Project {
         .unwrap_or_else(|e| panic!("Failed to parse module {:?}: {}", modname, e))
 }
 
-#[test]
+#[test] 
 fn declassified_qsort() {
     let funcname = "quickSort";
     init_logging();
@@ -24,7 +24,7 @@ fn declassified_qsort() {
     //let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained, ParameterVal::Unconstrained);
     let vecsymbols = vec!(String::from("A"), String::from("0"), String::from("n"));
     let mut config: Config<backend::DefaultBackend> = Config::default();
-    config.loop_bound = 1000;
+    config.loop_bound = 1000;  
     let rtype = ReturnType{
         isptr: true,
         base: String::from("int"),
