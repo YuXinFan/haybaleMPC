@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+#define N  5
+
+bool declassify(bool x) {
+	return x;
+}
 void print_array(char * c, uint *a, int len, int elen) {
 	printf("%s: ", c);
 	for (int i = 0; i < len; i++) {
@@ -24,21 +29,29 @@ typedef struct Queue {
 // function to create a queue
 // of given capacity.
 // It initializes size of queue as 0
-struct Queue* createQueue(unsigned capacity)
+void initQueue(Queue* queue, unsigned capacity, uint * x)
 {
-    struct Queue* queue = (struct Queue*)malloc(
-        sizeof(struct Queue));
     queue->capacity = capacity;
     queue->front = queue->size = 0;
  
     // This is important, see the enqueue
     queue->rear = capacity - 1;
-    queue->array = (uint*)malloc(
-        queue->capacity * 2 * sizeof(uint));
-    return queue;
+    queue->array = x;
 }
  
+Queue* createQueue(unsigned capacity)
+{	
+	Queue* queue = malloc(sizeof(Queue));
+    queue->capacity = capacity;
+    queue->front = queue->size = 0;
+ 
+    // This is important, see the enqueue
+    queue->rear = capacity - 1;
+    queue->array = malloc(2*capacity*sizeof(uint));
 
+	return queue;
+}
+ 
  
 // Queue is empty when size is 0
 int oqueue_empty(struct Queue* queue)
@@ -121,22 +134,33 @@ uint* ogale_shapley_textbook_revealed(uint * output,  uint * mPrefsRaw, uint * w
 		__builtin_assume(wPrefsRaw[i]>=0 && wPrefsRaw[i]<n);
 	}
 	for (int i = 0; i < n; i++) {
-		__builtin_assume(mPrefsRaw[i*n] == 0 || mPrefsRaw[i*n+1] == 0);
-		__builtin_assume(mPrefsRaw[i*n] == 1 || wPrefsRaw[i*n+1] == 1);
-		__builtin_assume(wPrefsRaw[i*n] == 0 || mPrefsRaw[i*n+1] == 0);
-		__builtin_assume(wPrefsRaw[i*n] == 1 || wPrefsRaw[i*n+1] == 1);
+		__builtin_assume(mPrefsRaw[i*n] == 0 || mPrefsRaw[i*n+1] == 0 || mPrefsRaw[i*n+2] == 0 || mPrefsRaw[i*n+3] == 0|| mPrefsRaw[i*n+4] == 0);
+		__builtin_assume(mPrefsRaw[i*n] == 1 || mPrefsRaw[i*n+1] == 1 || mPrefsRaw[i*n+2] == 1 || mPrefsRaw[i*n+3] == 1|| mPrefsRaw[i*n+4] == 1);
+		__builtin_assume(mPrefsRaw[i*n] == 2 || mPrefsRaw[i*n+1] == 2 || mPrefsRaw[i*n+2] == 2 || mPrefsRaw[i*n+3] == 2|| mPrefsRaw[i*n+4] == 2);
+		__builtin_assume(mPrefsRaw[i*n] == 3 || mPrefsRaw[i*n+1] == 3 || mPrefsRaw[i*n+2] == 3 || mPrefsRaw[i*n+3] == 3|| mPrefsRaw[i*n+4] == 3);
+		__builtin_assume(mPrefsRaw[i*n] == 4 || mPrefsRaw[i*n+1] == 4 || mPrefsRaw[i*n+2] == 4 || mPrefsRaw[i*n+3] == 4|| mPrefsRaw[i*n+4] == 4);
+
+		__builtin_assume(wPrefsRaw[i*n] == 0 || wPrefsRaw[i*n+1] == 0 || wPrefsRaw[i*n+2] == 0 || wPrefsRaw[i*n+3] == 0|| wPrefsRaw[i*n+4] == 0);
+		__builtin_assume(wPrefsRaw[i*n] == 1 || wPrefsRaw[i*n+1] == 1 || wPrefsRaw[i*n+2] == 1 || wPrefsRaw[i*n+3] == 1|| wPrefsRaw[i*n+4] == 1);
+		__builtin_assume(wPrefsRaw[i*n] == 2 || wPrefsRaw[i*n+1] == 2 || wPrefsRaw[i*n+2] == 2 || wPrefsRaw[i*n+3] == 2|| wPrefsRaw[i*n+4] == 2);
+		__builtin_assume(wPrefsRaw[i*n] == 3 || wPrefsRaw[i*n+1] == 3 || wPrefsRaw[i*n+2] == 3 || wPrefsRaw[i*n+3] == 3|| wPrefsRaw[i*n+4] == 3);
+		__builtin_assume(wPrefsRaw[i*n] == 4 || wPrefsRaw[i*n+1] == 4 || wPrefsRaw[i*n+2] == 4 || wPrefsRaw[i*n+3] == 4|| wPrefsRaw[i*n+4] == 4);
+
 	}
-	uint *mPrefs = calloc(n*n, sizeof(uint));
+
+	//uint *mPrefs = calloc(n*n, sizeof(uint));
+	uint mPrefs[N*N];
 	for (int i = 0; i < n*n; i++) {
 		mPrefs[i] = mPrefsRaw[i];
 	}
-	//oram * mPrefs = oram_from_array(ORAM_TYPE_AUTO, &ocCopyInt, n * n, mPrefsRaw); // ordered by rank; elements represent partner index
-	uint *wPrefs = malloc(n*n*sizeof(uint));
-	//oram * wPrefs = oram_new(ORAM_TYPE_AUTO, &ocCopyInt, n * n); // ordered by partner index; elements represent rank
-	uint *mStatus = malloc(2*n*sizeof(uint));
-	uint *wStatus = malloc(3*n*sizeof(uint));
-	//oram * mStatus = oram_new(ORAM_TYPE_AUTO, &cpy2, n);
-	//oram * wStatus = oram_new(ORAM_TYPE_AUTO, &cpy3, n);
+	//uint *wPrefs = malloc(n*n*sizeof(uint));
+	uint wPrefs[N * N];
+
+	//uint *mStatus = malloc(2*n*sizeof(uint));
+	uint mStatus[2*N];
+	//uint *wStatus = malloc(3*n*sizeof(uint));
+	uint wStatus[3*N];
+
 
 	//insert wprefs into oram
 	for (int ii = 0; ii < n; ii++) {
@@ -148,7 +172,10 @@ uint* ogale_shapley_textbook_revealed(uint * output,  uint * mPrefsRaw, uint * w
 
 	//print_array("wPrefs", wPrefs, n, n);
 
-	Queue *mQueue = createQueue(n*n);
+	Queue mQueue;
+	uint queueArray[2*N];
+	initQueue(&mQueue, n, queueArray);
+	//Queue *mQueue = createQueue(n);
 	//oqueue * mQueue = oqueue_new_static(&cpy2, n);
 	uint thisMQueue[2]; // [index, pref list pos]
 	uint nextMQueue[2]; // [index, pref list pos]
@@ -162,23 +189,23 @@ uint* ogale_shapley_textbook_revealed(uint * output,  uint * mPrefsRaw, uint * w
 	thisWStatus[1] = -1;
 	for (size_t ii = 0; ii < n; ii++) {
 		thisMQueue[0] = ii;
-		oqueue_push(mQueue, thisMQueue);
+		oqueue_push(&mQueue, thisMQueue);
 		oram_write(wStatus, thisWStatus, ii, 3);
 	}
-	// print_array("thisMQueue", mQueue->array, n, 2);
+	// print_array("thisMQueue", mQueue.array, n, 2);
 	// for (size_t ii = 0; ii < n+2; ii++) {
-	// 	oqueue_pop(thisMQueue, mQueue);
+	// 	oqueue_pop(thisMQueue, &mQueue);
 	// 	printf("%d, %d\n", thisMQueue[0], thisMQueue[1]);
-	// 	oqueue_push(mQueue, thisMQueue);
+	// 	oqueue_push(&mQueue, thisMQueue);
 	// }
-	// print_array("thisMQueue", mQueue->array, n, 2);
+	// print_array("thisMQueue", mQueue.array, n, 2);
 
 
     bool cond = false;
 	for (size_t ii = 0; ii < n * n; ii++) {
-		bool queue_empty = oqueue_empty(mQueue);
+		bool queue_empty = oqueue_empty(&mQueue);
 		if (queue_empty == 0) {
-			oqueue_pop(thisMQueue, mQueue); // pop cuo wu
+			oqueue_pop(thisMQueue, &mQueue); // pop cuo wu
 			oram_read(&proposedW, mPrefs, thisMQueue[0] * n + thisMQueue[1], 1);
 			oram_read(&thisWPrefs, wPrefs, proposedW * n + thisMQueue[0], 1);
 
@@ -203,14 +230,14 @@ uint* ogale_shapley_textbook_revealed(uint * output,  uint * mPrefsRaw, uint * w
 				if (thisWStatus[0] != -1) {
 					nextMQueue[0] = thisWStatus[0];
 					nextMQueue[1] = thisWStatus[2] + 1;
-					oqueue_push(mQueue, nextMQueue);
+					oqueue_push(&mQueue, nextMQueue);
 				}
 
 			} 
 		}else {
 			if (queue_empty==0) {
 				thisMQueue[1] += 1;
-				oqueue_push(mQueue, thisMQueue);
+				oqueue_push(&mQueue, thisMQueue);
 			}
 		}
 	}
@@ -221,11 +248,11 @@ uint* ogale_shapley_textbook_revealed(uint * output,  uint * mPrefsRaw, uint * w
 	}
 	//print_array("mStatus", mStatus, n, 2);
 
-	oqueue_free(mQueue);
-	oram_free(mPrefs);
-	oram_free(wPrefs);
-	oram_free(mStatus);
-	oram_free(wStatus);
+	//oqueue_free(mQueue);
+	//oram_free(mPrefs);
+	//oram_free(wPrefs);
+	//oram_free(mStatus);
+	//oram_free(wStatus);
 	return output;
 }
 
@@ -244,7 +271,7 @@ void shuffle(uint *array, size_t n) {
 
 
 int main() {
-	int pairs = 10;
+	int pairs = 5;
 	uint * perm = malloc(pairs * sizeof(uint));
 	for (int kk = 0; kk < pairs; kk++) {
 		perm[kk] = kk;
