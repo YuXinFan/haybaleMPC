@@ -457,14 +457,13 @@ where
     B: 'p,
 {   
     pub fn get_return_symbol(&mut self, ret: &B::BV) -> String {
-        let int = String::from("int");
-        match &self.returntype.base {
-            int => {
+        match &self.returntype.base[..] {
+            "int" | "uint" => {
                 let symbol: String;
                 if self.returntype.isptr == true {
                     let mut ret_array = vec!();     // a buffer to store symbol value of each item in the array
                     let len = self.returntype.len;    // the number of items in this array
-                    let base_type = Type::IntegerType{bits:32};
+                    //let base_type = Type::IntegerType{bits:32};
                     for idx in 0..len {
                         // let offset = self.state
                         //     .get_offset_constant_index(&base_type,idx as usize)

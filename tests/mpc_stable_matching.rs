@@ -10,24 +10,27 @@ fn init_logging() {
 }
 
 fn get_project() -> Project {
-    let modname = "tests/newfiles/qsort.bc";
+    let modname = "tests/newfiles/gale_shapley.bc";
     Project::from_bc_path(modname)
         .unwrap_or_else(|e| panic!("Failed to parse module {:?}: {}", modname, e))
 }
 
 #[test] 
-fn declassified_qsort() {
-    let funcname = "quickSort";
-    init_logging(); 
+fn declassified_stable_matching() {
+    let funcname = "ogale_shapley_textbook_revealed";
+    init_logging();
     let proj = get_project();
-    let vecparams = vec!(ParameterVal::PointerToAllocated(16), ParameterVal::ExactValue(0), ParameterVal::ExactValue(3));
-    //let vecparams = vec!(ParameterVal::Unconstrained, ParameterVal::Unconstrained, ParameterVal::Unconstrained);
-    let vecsymbols = vec!(String::from("A"), String::from("0"), String::from("n"));
+    // in bytes
+    let vecparams = vec!(ParameterVal::PointerToAllocated(2*4),
+        ParameterVal::PointerToAllocated(2*2*4), 
+        ParameterVal::PointerToAllocated(2*2*4),
+        ParameterVal::ExactValue(2));
+    let vecsymbols = vec!(String::from("Output"), String::from("mPref"), String::from("wPref"), String::from("n"));
     let mut config: Config<backend::DefaultBackend> = Config::default();
     config.loop_bound = 1000;  
     let rtype = ReturnType{
         isptr: true,
-        base: String::from("int"),
+        base: String::from("uint"),
         bits: 32,
         len: 4
     };
