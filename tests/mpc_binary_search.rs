@@ -10,29 +10,29 @@ fn init_logging() {
 }
 
 fn get_project() -> Project {
-    let modname = "tests/newfiles/gale_shapley.bc";
+    let modname = "tests/newfiles/binary_search.bc";
     Project::from_bc_path(modname)
         .unwrap_or_else(|e| panic!("Failed to parse module {:?}: {}", modname, e))
 }
 
 #[test] 
 fn declassified_stable_matching() {
-    let funcname = "ogale_shapley_textbook_revealed";
+    let funcname = "obinary_search_oram";
     init_logging();
     let proj = get_project();
     // in bytes
-    let vecparams = vec!(ParameterVal::PointerToAllocated(3),
-        ParameterVal::PointerToAllocated(3*3), 
-        ParameterVal::PointerToAllocated(3*3),
-        ParameterVal::ExactValue(3));
-    let vecsymbols = vec!(String::from("Output"), String::from("mPref"), String::from("wPref"), String::from("n"));
+    let vecparams = vec!(ParameterVal::PointerToAllocated(1),
+        ParameterVal::PointerToAllocated(16), 
+        ParameterVal::PointerToAllocated(1),
+        );
+    let vecsymbols = vec!(String::from("Output"), String::from("Array"), String::from("Ele"));
     let mut config: Config<backend::DefaultBackend> = Config::default();
     config.loop_bound = 1000;  
     let rtype = ReturnType{
-        isptr: true,
-        base: String::from("uint"),
-        bits: 8,
-        len: 5
+        isptr: false,
+        base: String::from("int"),
+        bits: 32,
+        len: 1
     };
     let args = verify_declassify_leakages_of_func(
         funcname, 
