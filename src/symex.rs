@@ -403,8 +403,6 @@ where
             debug!("Updated revealmap");
 
             
-            //debug!("NO Revealed Constraints Solver Constraints: {:?}", self.revealsolver.print_constraints());
-            //debug!("NO Revealed constraints Solver Sat Result: {:?}", solver_utils::sat(&self.revealsolver));
             // push to create a context to do verification without side-effect
             let true_bv: <B as Backend>::BV  =  BV::from_bool(self.revealsolver.clone(), true);
             let false_bv: <B as Backend>::BV  = BV::from_bool(self.revealsolver.clone(), false);

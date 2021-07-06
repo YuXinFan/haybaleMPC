@@ -16,13 +16,13 @@ fn get_project() -> Project {
 }
 
 #[test] 
-fn declassified_stable_matching() {
+fn declassified_binary_search() {
     let funcname = "obinary_search_oram";
     init_logging();
     let proj = get_project();
     // in bytes
     let vecparams = vec!(ParameterVal::PointerToAllocated(1),
-        ParameterVal::PointerToAllocated(16), 
+        ParameterVal::PointerToAllocated(16*4), 
         ParameterVal::PointerToAllocated(1),
         );
     let vecsymbols = vec!(String::from("Output"), String::from("Array"), String::from("Ele"));
@@ -42,7 +42,7 @@ fn declassified_stable_matching() {
         Some(vecsymbols),
         None,
         100,
-        rtype    );
+        rtype    ); 
     match args  { 
         PossibleSolutions::Exactly(hs) => {
             println!("Exactly: {:?}", hs);

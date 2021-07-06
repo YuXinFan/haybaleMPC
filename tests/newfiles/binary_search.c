@@ -1,6 +1,5 @@
 #include <stdbool.h>
 #include <stdlib.h>
-#include <math.h>
 
 #define N 16
 
@@ -15,6 +14,11 @@ void ocCopy(void* r, void* t) {
     *(int *)r = *(int *)t;
 }
 int obinary_search_oram(void* result, int *haystack, void* needle) {
+	for (int i = 1; i < N ; i++) {
+		__builtin_assume(haystack[i-1] < haystack[i] );
+	}
+
+	// upper bound = logN + 1;
 	int upper_bound = 4 + 1;
 
 	int index = -1;
@@ -28,17 +32,16 @@ int obinary_search_oram(void* result, int *haystack, void* needle) {
 	bool oeq;
 	void * temp_element = calloc(1, sizeof(int));
 
-	//void * temp_element = calloc(1, cpy->eltsize);
 	bool eq;
 	for (int ii = 0; ii < upper_bound; ii++) {
 		iimid = (iimin + iimax) / 2;
 		oram_read(temp_element, haystack, iimid);
 		aa = (int *)temp_element;
-		//oeq = ;
-		if (declassify(*aa == *bb)) {
+		oeq = *aa == *bb;
+		if (declassify(oeq)) {
 			ocCopy(result, temp_element);
 			index = iimid;
-            // break;
+            break;
 		}else{
 			olt = *aa < *bb;
 			if (olt) {

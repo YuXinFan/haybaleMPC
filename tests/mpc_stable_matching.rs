@@ -21,10 +21,10 @@ fn declassified_stable_matching() {
     init_logging();
     let proj = get_project();
     // in bytes
-    let vecparams = vec!(ParameterVal::PointerToAllocated(3),
-        ParameterVal::PointerToAllocated(3*3), 
-        ParameterVal::PointerToAllocated(3*3),
-        ParameterVal::ExactValue(3));
+    let vecparams = vec!(ParameterVal::PointerToAllocated(2),
+        ParameterVal::PointerToAllocated(2*2), 
+        ParameterVal::PointerToAllocated(2*2),
+        ParameterVal::ExactValue(2));
     let vecsymbols = vec!(String::from("Output"), String::from("mPref"), String::from("wPref"), String::from("n"));
     let mut config: Config<backend::DefaultBackend> = Config::default();
     config.loop_bound = 1000;  
@@ -32,7 +32,7 @@ fn declassified_stable_matching() {
         isptr: true,
         base: String::from("uint"),
         bits: 8,
-        len: 5
+        len: 2
     };
     let args = verify_declassify_leakages_of_func(
         funcname, 

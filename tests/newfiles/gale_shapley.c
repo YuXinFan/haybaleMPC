@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define N  3
+#define N  2
 
 bool declassify(bool x) {
 	return x;
@@ -136,13 +136,13 @@ u_int8_t* ogale_shapley_textbook_revealed(u_int8_t * output,  u_int8_t * mPrefsR
 	for (int i = 0; i < n; i++) {
 		__builtin_assume(mPrefsRaw[i*n] == 0 || mPrefsRaw[i*n+1] == 0 || mPrefsRaw[i*n+2] == 0 || mPrefsRaw[i*n+3] == 0|| mPrefsRaw[i*n+4] == 0);
 		__builtin_assume(mPrefsRaw[i*n] == 1 || mPrefsRaw[i*n+1] == 1 || mPrefsRaw[i*n+2] == 1 || mPrefsRaw[i*n+3] == 1|| mPrefsRaw[i*n+4] == 1);
-		__builtin_assume(mPrefsRaw[i*n] == 2 || mPrefsRaw[i*n+1] == 2 || mPrefsRaw[i*n+2] == 2 || mPrefsRaw[i*n+3] == 2|| mPrefsRaw[i*n+4] == 2);
+		//__builtin_assume(mPrefsRaw[i*n] == 2 || mPrefsRaw[i*n+1] == 2 || mPrefsRaw[i*n+2] == 2 || mPrefsRaw[i*n+3] == 2|| mPrefsRaw[i*n+4] == 2);
 		//__builtin_assume(mPrefsRaw[i*n] == 3 || mPrefsRaw[i*n+1] == 3 || mPrefsRaw[i*n+2] == 3 || mPrefsRaw[i*n+3] == 3|| mPrefsRaw[i*n+4] == 3);
 		//__builtin_assume(mPrefsRaw[i*n] == 4 || mPrefsRaw[i*n+1] == 4 || mPrefsRaw[i*n+2] == 4 || mPrefsRaw[i*n+3] == 4|| mPrefsRaw[i*n+4] == 4);
 
 		__builtin_assume(wPrefsRaw[i*n] == 0 || wPrefsRaw[i*n+1] == 0 || wPrefsRaw[i*n+2] == 0 || wPrefsRaw[i*n+3] == 0|| wPrefsRaw[i*n+4] == 0);
 		__builtin_assume(wPrefsRaw[i*n] == 1 || wPrefsRaw[i*n+1] == 1 || wPrefsRaw[i*n+2] == 1 || wPrefsRaw[i*n+3] == 1|| wPrefsRaw[i*n+4] == 1);
-		__builtin_assume(wPrefsRaw[i*n] == 2 || wPrefsRaw[i*n+1] == 2 || wPrefsRaw[i*n+2] == 2 || wPrefsRaw[i*n+3] == 2|| wPrefsRaw[i*n+4] == 2);
+		//__builtin_assume(wPrefsRaw[i*n] == 2 || wPrefsRaw[i*n+1] == 2 || wPrefsRaw[i*n+2] == 2 || wPrefsRaw[i*n+3] == 2|| wPrefsRaw[i*n+4] == 2);
 		//__builtin_assume(wPrefsRaw[i*n] == 3 || wPrefsRaw[i*n+1] == 3 || wPrefsRaw[i*n+2] == 3 || wPrefsRaw[i*n+3] == 3|| wPrefsRaw[i*n+4] == 3);
 		//__builtin_assume(wPrefsRaw[i*n] == 4 || wPrefsRaw[i*n+1] == 4 || wPrefsRaw[i*n+2] == 4 || wPrefsRaw[i*n+3] == 4|| wPrefsRaw[i*n+4] == 4);
 
